@@ -30,8 +30,8 @@ import org.hibernate.annotations.CascadeType;
 @Builder
 @Getter
 @Setter
-//@Entity
-//@Table(name = "costumer")
+@Entity
+@Table(name = "costumer")
 public class ClienteEntity extends User {
 
   @Id

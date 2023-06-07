@@ -42,8 +42,8 @@ import org.hibernate.annotations.Cascade;
 @Builder
 @Getter
 @Setter
-//@Entity
-//@Table(name = "order")
+@Entity
+@Table(name = "snack_bar_orders")
 public class PedidoEntity extends BaseEntity {
 
   @Id
