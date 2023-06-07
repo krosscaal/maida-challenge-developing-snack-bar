@@ -5,23 +5,22 @@
 
 package br.com.challenge.maidachallengedevelopingsnackbar.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.PreUpdate;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-//import javax.persistence.Column;
-//import javax.persistence.PrePersist;
-//import javax.persistence.PreUpdate;
+import javax.persistence.Column;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import lombok.Getter;
 import lombok.Setter;
 
 
 @Getter
 @Setter
+@MappedSuperclass
 public abstract class BaseEntity implements Serializable {
 
-  private static final long serialVersionID = -7294537041577127962L;
+  private static final long serialVersionID = 1L;
 
   @Column(nullable = true, columnDefinition = "TIMESTAMP")
   private LocalDateTime createdAt;

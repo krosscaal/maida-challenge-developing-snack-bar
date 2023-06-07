@@ -5,11 +5,11 @@
 
 package br.com.challenge.maidachallengedevelopingsnackbar.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.MappedSuperclass;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import javax.persistence.Column;
+import javax.persistence.MappedSuperclass;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Date;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,17 +22,17 @@ public abstract class User extends BaseEntity{
 
   @Column(name = "name")
   @NotBlank
-  @Size(max = 255)
+  @Size(max = 100)
   private String nome;
 
   @Email
   @NotBlank
-  @Size(max = 255)
+  @Size(max = 100)
   private String email;
 
   @Column(name = "password")
   @NotBlank
-  @Length(min = 6, max = 255)
+  @Length(min = 6, max = 100)
   private String senha;
 
   @Column(name = "fone_number")
