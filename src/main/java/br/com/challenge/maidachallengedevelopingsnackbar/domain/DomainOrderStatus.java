@@ -10,7 +10,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @AllArgsConstructor
-public enum OrderStatus {
+public enum DomainOrderStatus {
   RECEIVED("Recebido"),
   IN_PREPARATION("Em preparação"),
   READY("Pronto"),

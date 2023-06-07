@@ -10,7 +10,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @AllArgsConstructor
-public enum ProductClassification {
+public enum DomainProduct {
   DRINK("Bebida"),
   FOOD("Comida"),
   DESSERT("Sobremesa");
