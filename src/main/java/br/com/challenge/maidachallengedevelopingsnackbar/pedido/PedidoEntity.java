@@ -6,13 +6,12 @@
 package br.com.challenge.maidachallengedevelopingsnackbar.pedido;
 
 import br.com.challenge.maidachallengedevelopingsnackbar.cliente.ClienteEntity;
-import br.com.challenge.maidachallengedevelopingsnackbar.domain.OrderStatus;
+import br.com.challenge.maidachallengedevelopingsnackbar.domain.DomainOrderStatus;
 import br.com.challenge.maidachallengedevelopingsnackbar.model.BaseEntity;
 import br.com.challenge.maidachallengedevelopingsnackbar.produto.ProdutoEntity;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -35,7 +34,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Cascade;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -75,5 +73,5 @@ public class PedidoEntity extends BaseEntity {
 
   @NotNull
   @Enumerated(EnumType.STRING)
-  private OrderStatus status;
+  private DomainOrderStatus status;
 }

@@ -5,7 +5,7 @@
 
 package br.com.challenge.maidachallengedevelopingsnackbar.produto;
 
-import br.com.challenge.maidachallengedevelopingsnackbar.domain.ProductClassification;
+import br.com.challenge.maidachallengedevelopingsnackbar.domain.DomainProduct;
 import br.com.challenge.maidachallengedevelopingsnackbar.model.BaseEntity;
 import java.math.BigDecimal;
 import javax.persistence.Column;
@@ -58,7 +58,7 @@ public class ProdutoEntity extends BaseEntity {
   @NotNull
   @Enumerated(EnumType.STRING)
   @Column(name = "product_type")
-  private ProductClassification tipo;
+  private DomainProduct tipo;
 
   @NotNull
   @Column(name = "quantity")
