@@ -60,4 +60,12 @@ public class ProdutoEntity extends BaseEntity {
   @Column(name = "product_type")
   private ProductClassification tipo;
 
+  @NotNull
+  @Column(name = "quantity")
+  private Integer quantidade;
+
+  @NotNull
+  @Column(name = "minimal_quantity")
+  private Integer quantidadeMinima;
+
 }
