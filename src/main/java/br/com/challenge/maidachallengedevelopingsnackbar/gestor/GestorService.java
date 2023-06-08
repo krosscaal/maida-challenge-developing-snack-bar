@@ -17,13 +17,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class GestorService {
-
   final static String MANAGER_EXISTS ="Gestor já foi cadastrado, somente pode cadastrar um único Gestor!";
-
   final static String MANAGER_NOT_FOUND = "Gestor não encontrado!";
   @Autowired
   private GestorRepository repository;
-
   @Autowired
   private ModelMapper modelMapper;
 
@@ -39,19 +36,19 @@ public class GestorService {
     if(this.repository.count() > 0) {
       throw new BusinessException(MANAGER_EXISTS);
     }
-    GestorEntity obj = modelMapper.map(dto, GestorEntity.class);
-    return this.repository.save(obj);
+    GestorEntity newObj = modelMapper.map(dto, GestorEntity.class);
+    return this.repository.save(newObj);
   }
   @Transactional
   public GestorEntity updateGestor(final Long id, final GestorDto dto) {
 
     final Optional<GestorEntity> optinalObjPersisted = this.findGestor(id);
 
-    GestorEntity obj = modelMapper.map(dto, GestorEntity.class);
+    GestorEntity updateObj = modelMapper.map(dto, GestorEntity.class);
 
-    obj.setCreatedAt(optinalObjPersisted.get().getCreatedAt());
-    obj.setId(optinalObjPersisted.get().getId());
-    return this.repository.save(obj);
+    updateObj.setCreatedAt(optinalObjPersisted.get().getCreatedAt());
+    updateObj.setId(id);
+    return this.repository.save(updateObj);
   }
 
   private Optional<GestorEntity> findGestor(final Long id) {

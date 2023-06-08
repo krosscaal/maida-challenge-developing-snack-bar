@@ -50,8 +50,8 @@ public class ProdutoService implements ProdutoInterface{
     if(this.nomeExists(dto)) {
       throw new BusinessException(PRODUCT_EXISTS);
     }
-    ProdutoEntity obj = modelMapper.map(dto, ProdutoEntity.class);
-    return this.repository.save(obj);
+    ProdutoEntity newObj = modelMapper.map(dto, ProdutoEntity.class);
+    return this.repository.save(newObj);
   }
 
   @Transactional
@@ -59,17 +59,18 @@ public class ProdutoService implements ProdutoInterface{
   public ProdutoEntity updateProduto(final Long id, final ProdutoDto dto) {
 
     final Optional<ProdutoEntity> optionalObj = this.findProduto(id);
-    final Optional<ProdutoEntity> optionalByNome = this.repository.findByNome(dto.getNome());
+    final Optional<ProdutoEntity> optionalByNome =
+        this.repository.findByNome(dto.getNome());
 
     if(optionalByNome.isPresent()
         && !optionalObj.get().getId().equals(optionalByNome.get().getId())) {
       throw new BusinessException(PRODUCT_EXISTS);
     }
 
-    ProdutoEntity obj = modelMapper.map(dto, ProdutoEntity.class);
-    obj.setId(id);
-    obj.setCreatedAt(optionalObj.get().getCreatedAt());
-    return this.repository.save(obj);
+    ProdutoEntity updateObj = modelMapper.map(dto, ProdutoEntity.class);
+    updateObj.setId(id);
+    updateObj.setCreatedAt(optionalObj.get().getCreatedAt());
+    return this.repository.save(updateObj);
   }
 
   @Transactional
@@ -80,7 +81,6 @@ public class ProdutoService implements ProdutoInterface{
   }
 
   private Optional<ProdutoEntity> findProduto(final Long id) {
-
     final Optional<ProdutoEntity> optionalObj = this.repository.findById(id);
     if(optionalObj.isEmpty()) {
       throw new BusinessException(PRODUCT_NOT_FOUND);
@@ -89,7 +89,6 @@ public class ProdutoService implements ProdutoInterface{
   }
 
   private boolean nomeExists(ProdutoDto dto) {
-
     return this.repository
         .findByNome(dto.getNome())
         .stream()
