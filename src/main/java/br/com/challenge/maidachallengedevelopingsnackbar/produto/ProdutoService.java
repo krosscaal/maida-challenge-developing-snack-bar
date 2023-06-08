@@ -40,24 +40,14 @@ public class ProdutoService implements ProdutoInterface{
   @Override
   public ProdutoEntity getProduto(Long id) {
 
-    final Optional<ProdutoEntity> entityOptional = this.repository.findById(id);
-
-    if(entityOptional.isEmpty()) {
-      throw new BusinessException(PRODUCT_NOT_FOUND);
-    }
-
-    return entityOptional.get();
+    final Optional<ProdutoEntity> optionalObjPersisted = this.findProduto(id);
+    return optionalObjPersisted.get();
   }
 
   @Transactional
   @Override
   public ProdutoEntity addProduto(final ProdutoDto dto) {
-    boolean nomeExists =
-        repository
-            .findByNome(dto.getNome())
-            .stream()
-            .anyMatch(nomeExiste -> !nomeExiste.equals(dto));
-    if(nomeExists) {
+    if(this.nomeExists(dto)) {
       throw new BusinessException(PRODUCT_EXISTS);
     }
     ProdutoEntity obj = modelMapper.map(dto, ProdutoEntity.class);
@@ -68,33 +58,41 @@ public class ProdutoService implements ProdutoInterface{
   @Override
   public ProdutoEntity updateProduto(final Long id, final ProdutoDto dto) {
 
-    final Optional<ProdutoEntity> entityOptional = this.repository.findById(id);
-
-    if(entityOptional.isEmpty()) {
-      throw new BusinessException(PRODUCT_NOT_FOUND);
-    }
+    final Optional<ProdutoEntity> optionalObj = this.findProduto(id);
     final Optional<ProdutoEntity> optionalByNome = this.repository.findByNome(dto.getNome());
 
-    if(optionalByNome.isPresent() && !entityOptional.get().getId().equals(optionalByNome.get().getId())) {
+    if(optionalByNome.isPresent()
+        && !optionalObj.get().getId().equals(optionalByNome.get().getId())) {
       throw new BusinessException(PRODUCT_EXISTS);
     }
 
     ProdutoEntity obj = modelMapper.map(dto, ProdutoEntity.class);
     obj.setId(id);
-    obj.setCreatedAt(entityOptional.get().getCreatedAt());
+    obj.setCreatedAt(optionalObj.get().getCreatedAt());
     return this.repository.save(obj);
   }
 
   @Transactional
   @Override
   public void deleteProduto(final Long id) {
-    final Optional<ProdutoEntity> entityOptional = this.repository.findById(id);
-
-    if(entityOptional.isEmpty()) {
-      throw new BusinessException(PRODUCT_NOT_FOUND);
-    }
-
+    this.findProduto(id);
     this.repository.deleteById(id);
   }
 
+  private Optional<ProdutoEntity> findProduto(final Long id) {
+
+    final Optional<ProdutoEntity> optionalObj = this.repository.findById(id);
+    if(optionalObj.isEmpty()) {
+      throw new BusinessException(PRODUCT_NOT_FOUND);
+    }
+    return optionalObj;
+  }
+
+  private boolean nomeExists(ProdutoDto dto) {
+
+    return this.repository
+        .findByNome(dto.getNome())
+        .stream()
+        .anyMatch(nomeExiste -> !nomeExiste.equals(dto));
+  }
 }
