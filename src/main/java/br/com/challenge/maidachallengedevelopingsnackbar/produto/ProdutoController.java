@@ -34,7 +34,7 @@ public class ProdutoController {
   @ResponseBody
   public ResponseEntity<List<ProdutoEntity>> listProdutos() {
 
-    final List<ProdutoEntity> listaProdutos = this.produtoInterface.listProdutos();
+    final List<ProdutoEntity> listaProdutos = this.produtoInterface.listProdutosParaGestor();
     return ResponseEntity.ok().body(listaProdutos);
   }
 
@@ -64,5 +64,10 @@ public class ProdutoController {
   public ResponseEntity<Void> removeProduto(@PathVariable("id") Long id) {
     this.produtoInterface.deleteProduto(id);
     return ResponseEntity.noContent().build();
+  }
+  @GetMapping
+  public ResponseEntity<List<ProdutoDto>> listProdutosParaCliente() {
+    final List<ProdutoDto> listaParaClientes = this.produtoInterface.listProdutosParaCliente();
+    return ResponseEntity.ok().body(listaParaClientes);
   }
 }

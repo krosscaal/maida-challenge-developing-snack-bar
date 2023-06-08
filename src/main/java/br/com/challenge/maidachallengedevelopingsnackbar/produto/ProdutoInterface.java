@@ -11,10 +11,11 @@ import java.util.Optional;
 
 public interface ProdutoInterface {
 
-  List<ProdutoEntity> listProdutos();
+  List<ProdutoEntity> listProdutosParaGestor();
   ProdutoEntity getProduto(Long id);
   ProdutoEntity addProduto(ProdutoDto dto);
   ProdutoEntity updateProduto(Long id, ProdutoDto dto);
   void deleteProduto(Long id);
+  List<ProdutoDto> listProdutosParaCliente();
 
 }

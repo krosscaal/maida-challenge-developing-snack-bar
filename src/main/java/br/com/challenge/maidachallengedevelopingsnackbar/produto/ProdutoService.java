@@ -9,10 +9,12 @@ import br.com.challenge.maidachallengedevelopingsnackbar.exception.BusinessExcep
 import br.com.challenge.maidachallengedevelopingsnackbar.produto.dto.ProdutoDto;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,7 +32,7 @@ public class ProdutoService implements ProdutoInterface{
   private ModelMapper modelMapper;
 
   @Override
-  public List<ProdutoEntity> listProdutos() {
+  public List<ProdutoEntity> listProdutosParaGestor() {
 
     return this.manager
         .createQuery("FROM ProdutoEntity p order by p.nome", ProdutoEntity.class)
@@ -78,6 +80,16 @@ public class ProdutoService implements ProdutoInterface{
   public void deleteProduto(final Long id) {
     this.findProduto(id);
     this.repository.deleteById(id);
+  }
+
+  @Override
+  public List<ProdutoDto> listProdutosParaCliente() {
+
+    return repository
+        .findAll(Sort.by("nome"))
+        .stream()
+        .map(produtoEntity -> modelMapper.map(produtoEntity, ProdutoDto.class))
+        .collect(Collectors.toList());
   }
 
   private Optional<ProdutoEntity> findProduto(final Long id) {
