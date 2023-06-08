@@ -21,12 +21,14 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Builder
 @Getter
 @Setter
@@ -34,6 +36,7 @@ import lombok.Setter;
 @Table(name = "products")
 public class ProdutoEntity extends BaseEntity {
 
+  @EqualsAndHashCode.Include
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -41,18 +44,17 @@ public class ProdutoEntity extends BaseEntity {
   @Column(name = "name")
   @NotNull
   @NotBlank
-  @Size(max = 100)
+  @Size(min = 5, max = 100)
   private String nome;
 
   @Column(name = "product_price")
   @NotNull
-  @NotBlank
   private BigDecimal preco;
 
   @Column(name = "description")
   @NotNull
   @NotBlank
-  @Size(max = 255)
+  @Size(min = 10, max = 255)
   private String descricao;
 
   @NotNull

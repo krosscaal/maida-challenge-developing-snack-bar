@@ -45,11 +45,11 @@ public class LanchoneteEntity extends BaseEntity {
   @Column(name = "name")
   @NotNull
   @NotBlank
-  @Length(min=5 , max = 255, message = "Nome deve ter mínimo {min} e máximo {max} caracteres")
+  @Length(min = 5 , max = 255)
   private String nome;
 
   @NotNull
-  @NotBlank(message = "email em formato incorreto ou está em branco")
+  @NotBlank
   @Email
   private String email;
 
