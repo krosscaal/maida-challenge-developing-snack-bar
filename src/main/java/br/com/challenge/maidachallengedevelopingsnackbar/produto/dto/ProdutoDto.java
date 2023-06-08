@@ -7,6 +7,7 @@ package br.com.challenge.maidachallengedevelopingsnackbar.produto.dto;
 
 import br.com.challenge.maidachallengedevelopingsnackbar.domain.DomainProduct;
 import java.math.BigDecimal;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -37,7 +38,7 @@ public class ProdutoDto {
   @NotNull
   private Integer quantidade;
 
-  @NotNull
+  @Min(3)
   private Integer quantidadeMinima;
 
   @NotNull
