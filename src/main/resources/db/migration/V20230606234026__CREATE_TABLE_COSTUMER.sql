@@ -3,9 +3,9 @@ create table if not exists costumer (
   created_at TIMESTAMP,
   updated_at TIMESTAMP,
   birth_date timestamp,
-  email varchar(100),
-  name varchar(100),
-  password varchar(100),
+  email varchar(100) not null,
+  name varchar(100) not null,
+  password varchar(100) not null,
   fone_number int4,
   primary key (id)
 );
