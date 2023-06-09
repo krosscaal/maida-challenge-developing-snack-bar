@@ -6,11 +6,18 @@
 package br.com.challenge.maidachallengedevelopingsnackbar.cliente;
 
 import br.com.challenge.maidachallengedevelopingsnackbar.cliente.dto.ClienteDto;
+import br.com.challenge.maidachallengedevelopingsnackbar.cliente.dto.ClienteDtoDadosPublicos;
+import br.com.challenge.maidachallengedevelopingsnackbar.cliente.dto.ClienteDtoVerDadosPeloGestor;
+import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,12 +30,45 @@ public class ClienteController {
   @Autowired
   private ClienteService service;
 
-  @GetMapping("/new")
+  @Transactional
+  @PostMapping("/new")
   @ResponseBody
-  public ResponseEntity<ClienteEntity> addCliente(@Valid @RequestBody ClienteDto dto) {
+  public ResponseEntity<ClienteDtoDadosPublicos> addCliente(
+      @Valid @RequestBody ClienteDto dto) {
 
-    final ClienteEntity clienteObj = this.service.addCliente(dto);
-    return new ResponseEntity<>(clienteObj, HttpStatus.CREATED);
+    final ClienteDtoDadosPublicos clienteDtoDadosPublicosObj =
+        this.service.addCliente(dto);
+    return new ResponseEntity<>(clienteDtoDadosPublicosObj, HttpStatus.CREATED);
+  }
+  @Transactional
+  @PutMapping("/update")
+  @ResponseBody
+  public ResponseEntity<ClienteDtoDadosPublicos> updateCliente(
+      @PathVariable("id") Long id, @Valid @RequestBody ClienteDto dto) {
+    return new ResponseEntity<>(
+        this.service.updateCliente(id, dto),
+        HttpStatus.OK);
   }
 
+  @GetMapping("/{id}")
+  @ResponseBody
+  public ResponseEntity<ClienteDtoVerDadosPeloGestor> getClienteParaGestor(
+      @PathVariable("id") long id) {
+    return new ResponseEntity<>(this.service.getClienteParaGestor(id), HttpStatus.OK);
+  }
+  @GetMapping("/v2/{id}")
+  @ResponseBody
+  public ResponseEntity<ClienteDtoDadosPublicos> getClienteParaCliente(
+      @PathVariable("id") Long id) {
+    return new ResponseEntity<>(this.service.getClienteParaCliente(id), HttpStatus.OK);
+  }
+
+  @GetMapping("/list")
+  @ResponseBody
+  public ResponseEntity<List<ClienteDtoVerDadosPeloGestor>> listClientesParaGestor() {
+
+    final List<ClienteDtoVerDadosPeloGestor> listaClientesParaGestor =
+        this.service.listClientesParaGestor();
+    return ResponseEntity.ok().body(listaClientesParaGestor);
+  }
 }

@@ -30,23 +30,29 @@ public class ClienteService {
   private ModelMapper modelMapper;
 
   @Transactional
-  public ClienteEntity addCliente(final ClienteDto dto) {
+  public ClienteDtoDadosPublicos addCliente(final ClienteDto dto) {
     if(this.emailExists(dto)) {
       throw new BusinessException(COSTUMER_EMAIL_EXISTS);
     }
     ClienteEntity clienteObj = modelMapper.map(dto, ClienteEntity.class);
-    return this.repository.save(clienteObj);
+    this.repository.save(clienteObj);
+    ClienteDtoDadosPublicos clienteDtoDadosPublicos = modelMapper.map(clienteObj, ClienteDtoDadosPublicos.class);
+    return clienteDtoDadosPublicos;
   }
 
   @Transactional
-  public ClienteEntity updateCliente(final Long id, final ClienteDto dto) {
+  public ClienteDtoDadosPublicos updateCliente(final Long id, final ClienteDto dto) {
 
     final Optional<ClienteEntity> optionalObjPersisted = this.findCliente(id);
     this.emailExists(dto);
     ClienteEntity updateObj = modelMapper.map(dto, ClienteEntity.class);
+
     updateObj.setId(id);
     updateObj.setCreatedAt(optionalObjPersisted.get().getCreatedAt());
-    return this.repository.save(updateObj);
+    this.repository.save(updateObj);
+
+    ClienteDtoDadosPublicos clienteDtoDadosPublicos = modelMapper.map(updateObj, ClienteDtoDadosPublicos.class);
+    return clienteDtoDadosPublicos;
   }
 
   public ClienteDtoVerDadosPeloGestor getClienteParaGestor(final Long id) {
