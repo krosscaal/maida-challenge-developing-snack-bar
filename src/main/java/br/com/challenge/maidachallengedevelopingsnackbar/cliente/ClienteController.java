@@ -41,7 +41,7 @@ public class ClienteController {
     return new ResponseEntity<>(clienteDtoDadosPublicosObj, HttpStatus.CREATED);
   }
   @Transactional
-  @PutMapping("/update")
+  @PutMapping("/update/{id}")
   @ResponseBody
   public ResponseEntity<ClienteDtoDadosPublicos> updateCliente(
       @PathVariable("id") Long id, @Valid @RequestBody ClienteDto dto) {

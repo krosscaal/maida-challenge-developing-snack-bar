@@ -18,8 +18,9 @@ import lombok.Setter;
 @Setter
 public class ClienteDtoVerDadosPeloGestor {
 
+  private Long id;
   private LocalDateTime createdAt;
-  private LocalDateTime updateAt;
+  private LocalDateTime updatedAt;
   private String nome;
   private String email;
   private String telefone;

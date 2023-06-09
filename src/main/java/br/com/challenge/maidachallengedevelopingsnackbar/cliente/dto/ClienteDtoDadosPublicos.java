@@ -19,7 +19,7 @@ public class ClienteDtoDadosPublicos {
 
   private String nome;
   private String email;
-  private String telefone;
+  private String  telefone;
   private Date dataNascimento;
 
 }
