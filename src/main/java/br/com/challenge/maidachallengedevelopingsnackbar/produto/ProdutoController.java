@@ -6,8 +6,8 @@
 package br.com.challenge.maidachallengedevelopingsnackbar.produto;
 
 import br.com.challenge.maidachallengedevelopingsnackbar.produto.dto.ProdutoDto;
+import br.com.challenge.maidachallengedevelopingsnackbar.produto.dto.ProdutoDtoParaCliente;
 import java.util.List;
-import java.util.Optional;
 import javax.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 
 @AllArgsConstructor
 @RestController
@@ -30,7 +29,7 @@ public class ProdutoController {
 
   private ProdutoInterface produtoInterface;
 
-  @GetMapping
+  @GetMapping("/list")
   @ResponseBody
   public ResponseEntity<List<ProdutoEntity>> listProdutos() {
 
@@ -65,9 +64,17 @@ public class ProdutoController {
     this.produtoInterface.deleteProduto(id);
     return ResponseEntity.noContent().build();
   }
-  @GetMapping
-  public ResponseEntity<List<ProdutoDto>> listProdutosParaCliente() {
-    final List<ProdutoDto> listaParaClientes = this.produtoInterface.listProdutosParaCliente();
-    return ResponseEntity.ok().body(listaParaClientes);
+  @GetMapping("/list-v2")
+  public ResponseEntity<List<ProdutoDtoParaCliente>> listProdutosParaCliente() {
+    final List<ProdutoDtoParaCliente> listaProdutosParaCliente = this.produtoInterface.listProdutosParaCliente();
+    return ResponseEntity.ok().body(listaProdutosParaCliente);
+  }
+
+  @GetMapping("/v2")
+  public ResponseEntity<ProdutoDtoParaCliente> getProdutoParaCliente(final Long id) {
+
+    final ProdutoDtoParaCliente produtoParaClienteObj =
+        this.produtoInterface.getProdutoParaCliente(id);
+    return ResponseEntity.ok().body(produtoParaClienteObj);
   }
 }

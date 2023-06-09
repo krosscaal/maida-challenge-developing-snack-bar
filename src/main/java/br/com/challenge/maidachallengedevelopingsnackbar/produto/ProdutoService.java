@@ -7,13 +7,13 @@ package br.com.challenge.maidachallengedevelopingsnackbar.produto;
 
 import br.com.challenge.maidachallengedevelopingsnackbar.exception.BusinessException;
 import br.com.challenge.maidachallengedevelopingsnackbar.produto.dto.ProdutoDto;
+import br.com.challenge.maidachallengedevelopingsnackbar.produto.dto.ProdutoDtoParaCliente;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -83,13 +83,22 @@ public class ProdutoService implements ProdutoInterface{
   }
 
   @Override
-  public List<ProdutoDto> listProdutosParaCliente() {
+  public List<ProdutoDtoParaCliente> listProdutosParaCliente() {
 
     return repository
         .findAll(Sort.by("nome"))
         .stream()
-        .map(produtoEntity -> modelMapper.map(produtoEntity, ProdutoDto.class))
+        .map(produtoEntity -> modelMapper.map(produtoEntity, ProdutoDtoParaCliente.class))
         .collect(Collectors.toList());
+  }
+
+  @Override
+  public ProdutoDtoParaCliente getProdutoParaCliente(final Long id) {
+
+    final Optional<ProdutoEntity> produtoObjPersisted = this.findProduto(id);
+    ProdutoDtoParaCliente produtoDtoParaCliente =
+        modelMapper.map(produtoObjPersisted.get(), ProdutoDtoParaCliente.class);
+    return produtoDtoParaCliente;
   }
 
   private Optional<ProdutoEntity> findProduto(final Long id) {

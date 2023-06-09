@@ -6,8 +6,8 @@
 package br.com.challenge.maidachallengedevelopingsnackbar.produto;
 
 import br.com.challenge.maidachallengedevelopingsnackbar.produto.dto.ProdutoDto;
+import br.com.challenge.maidachallengedevelopingsnackbar.produto.dto.ProdutoDtoParaCliente;
 import java.util.List;
-import java.util.Optional;
 
 public interface ProdutoInterface {
 
@@ -16,6 +16,7 @@ public interface ProdutoInterface {
   ProdutoEntity addProduto(ProdutoDto dto);
   ProdutoEntity updateProduto(Long id, ProdutoDto dto);
   void deleteProduto(Long id);
-  List<ProdutoDto> listProdutosParaCliente();
+  List<ProdutoDtoParaCliente> listProdutosParaCliente();
+  ProdutoDtoParaCliente getProdutoParaCliente(Long id);
 
 }
