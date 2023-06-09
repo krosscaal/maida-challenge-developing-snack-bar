@@ -6,8 +6,11 @@
 package br.com.challenge.maidachallengedevelopingsnackbar.gestor;
 
 import br.com.challenge.maidachallengedevelopingsnackbar.gestor.dto.GestorDto;
+import br.com.challenge.maidachallengedevelopingsnackbar.gestor.dto.GestorListDto;
+import javax.json.bind.annotation.JsonbDateFormat;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,16 +23,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/snack_bar_manager")
+@RequestMapping("/snack_bar")
 public class GestorController {
 
   @Autowired
   private GestorService service;
 
-  @GetMapping
+  @GetMapping("/manager")
   @ResponseBody
-  public ResponseEntity<GestorEntity> getGestor(@PathVariable("id") Long id) {
-    return new ResponseEntity<>(this.service.getGestor(id), HttpStatus.OK );
+  public ResponseEntity<GestorListDto> getGestor() {
+    return new ResponseEntity<>(this.service.getGestor(), HttpStatus.OK );
   }
   @PostMapping("/new")
   @ResponseBody
@@ -38,10 +41,10 @@ public class GestorController {
     final GestorEntity gestorObj = this.service.addGestor(dto);
     return new ResponseEntity<>(gestorObj, HttpStatus.CREATED);
   }
-  @PutMapping("/update/{id}")
+  @PutMapping("/update")
   @ResponseBody
-  public ResponseEntity<GestorEntity> updateGestor(@PathVariable("id") Long id, @Valid @RequestBody GestorDto dto) {
-    return new ResponseEntity<>(this.service.updateGestor(id, dto), HttpStatus.OK);
+  public ResponseEntity<GestorEntity> updateGestor(@Valid @RequestBody GestorDto dto) {
+    return new ResponseEntity<>(this.service.updateGestor(dto), HttpStatus.OK);
   }
 
 }

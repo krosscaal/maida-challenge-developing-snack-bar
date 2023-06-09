@@ -6,9 +6,12 @@
 package br.com.challenge.maidachallengedevelopingsnackbar.cliente;
 
 import br.com.challenge.maidachallengedevelopingsnackbar.cliente.dto.ClienteDto;
+import br.com.challenge.maidachallengedevelopingsnackbar.cliente.dto.ClienteDtoDadosPublicos;
+import br.com.challenge.maidachallengedevelopingsnackbar.cliente.dto.ClienteDtoVerDadosPeloGestor;
 import br.com.challenge.maidachallengedevelopingsnackbar.exception.BusinessException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -46,13 +49,24 @@ public class ClienteService {
     return this.repository.save(updateObj);
   }
 
-  public ClienteEntity getCliente(final Long id) {
+  public ClienteDtoVerDadosPeloGestor getClienteParaGestor(final Long id) {
     final Optional<ClienteEntity> clienteObjPersisted = this.findCliente(id);
-    return clienteObjPersisted.get();
+    ClienteDtoVerDadosPeloGestor clienteDtoVerDadosPeloGestor =
+        modelMapper.map(clienteObjPersisted.get(), ClienteDtoVerDadosPeloGestor.class);
+    return clienteDtoVerDadosPeloGestor;
   }
 
-  public List<ClienteEntity> listClientes() {
-    return this.repository.findAll(Sort.by("nome"));
+  public ClienteDtoDadosPublicos getClienteParaCliente(final Long id) {
+    final Optional<ClienteEntity> clienteObjPersisted = this.findCliente(id);
+    ClienteDtoDadosPublicos clienteDtoDadosPublicos =
+        modelMapper.map(clienteObjPersisted.get(), ClienteDtoDadosPublicos.class);
+    return clienteDtoDadosPublicos;
+  }
+
+  public List<ClienteDtoVerDadosPeloGestor> listClientesParaGestor() {
+    return this.repository.findAll(Sort.by("nome"))
+        .stream().map(cliente -> modelMapper.map(cliente, ClienteDtoVerDadosPeloGestor.class))
+        .collect(Collectors.toList());
   }
 
 
