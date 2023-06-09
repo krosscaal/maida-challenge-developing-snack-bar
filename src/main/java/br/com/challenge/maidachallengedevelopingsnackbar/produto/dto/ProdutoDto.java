@@ -38,6 +38,7 @@ public class ProdutoDto {
   @NotNull
   private Integer quantidade;
 
+  @NotNull
   @Min(3)
   private Integer quantidadeMinima;
 

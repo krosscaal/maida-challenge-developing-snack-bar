@@ -5,10 +5,19 @@
 
 package br.com.challenge.maidachallengedevelopingsnackbar.produto;
 
+import static br.com.challenge.maidachallengedevelopingsnackbar.mensagens.MensageEstatica.PRODUCT_EXISTS;
+import static br.com.challenge.maidachallengedevelopingsnackbar.mensagens.MensageEstatica.PRODUCT_NAME_ERROR;
+import static br.com.challenge.maidachallengedevelopingsnackbar.mensagens.MensageEstatica.PRODUCT_NOT_FOUND;
+import static br.com.challenge.maidachallengedevelopingsnackbar.mensagens.MensageEstatica.PRODUCT_PRICE_ERROR;
+import static br.com.challenge.maidachallengedevelopingsnackbar.mensagens.MensageEstatica.PRODUCT_QUANTITY_ERROR;
+
 import br.com.challenge.maidachallengedevelopingsnackbar.exception.BusinessException;
+import br.com.challenge.maidachallengedevelopingsnackbar.gestor.dto.GestorDto;
 import br.com.challenge.maidachallengedevelopingsnackbar.produto.dto.ProdutoDto;
 import br.com.challenge.maidachallengedevelopingsnackbar.produto.dto.ProdutoDtoParaCliente;
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
@@ -21,9 +30,6 @@ import org.springframework.transaction.annotation.Transactional;
 @AllArgsConstructor
 @Service
 public class ProdutoService implements ProdutoInterface{
-
-  final static String PRODUCT_EXISTS = "Já existe um produto cadastrado com esse nome!";
-  final static String PRODUCT_NOT_FOUND = "Produto não encontrado!";
 
   private ProdutoRepository repository;
 
@@ -49,6 +55,7 @@ public class ProdutoService implements ProdutoInterface{
   @Transactional
   @Override
   public ProdutoEntity addProduto(final ProdutoDto dto) {
+    this.validarProdutoDto(dto);
     if(this.nomeExists(dto)) {
       throw new BusinessException(PRODUCT_EXISTS);
     }
@@ -60,6 +67,7 @@ public class ProdutoService implements ProdutoInterface{
   @Override
   public ProdutoEntity updateProduto(final Long id, final ProdutoDto dto) {
 
+    this.validarProdutoDto(dto);
     final Optional<ProdutoEntity> optionalObj = this.findProduto(id);
     final Optional<ProdutoEntity> optionalByNome =
         this.repository.findByNome(dto.getNome());
@@ -115,4 +123,25 @@ public class ProdutoService implements ProdutoInterface{
         .stream()
         .anyMatch(nomeExiste -> !nomeExiste.equals(dto));
   }
+  private void validarProdutoDto(final ProdutoDto dto) {
+    dto.setNome(dto.getNome().toUpperCase(Locale.ROOT));
+    dto.setDescricao(dto.getDescricao().toUpperCase(Locale.ROOT));
+    final String nomeProduto = dto.getNome();
+
+    final boolean nomeIsAlfanumerico = nomeProduto.matches("[A-Z0-9 ]+");
+
+    if(!nomeIsAlfanumerico) {
+      throw new BusinessException(PRODUCT_NAME_ERROR);
+    }
+    if(dto.getNome().length() == 5 && dto.getNome().contains(" ")) {
+      throw new BusinessException(PRODUCT_NAME_ERROR);
+    }
+    if(dto.getQuantidade() < 3) {
+      throw new BusinessException(PRODUCT_QUANTITY_ERROR);
+    }
+    if(dto.getPreco().doubleValue() <= 0 ) {
+      throw new BusinessException(PRODUCT_PRICE_ERROR);
+    }
+  }
+
 }
