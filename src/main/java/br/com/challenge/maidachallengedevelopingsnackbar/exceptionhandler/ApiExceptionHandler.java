@@ -18,6 +18,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -66,6 +67,17 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     return handleExceptionInternal(ex, apiErrors, headers, status, request);
   }
+  @Override
+  protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+    ApiErrors apiErrors =
+        new ApiErrors(
+            status.value(),
+            LocalDateTime.now().format(dataFormatada),
+            "Formato de data errada, deve estar em formato yyyy-mm-dd");
+
+    return handleExceptionInternal(ex, apiErrors, headers, status, request);
+
+  }
 
   @ExceptionHandler(BusinessException.class)
   public ResponseEntity<Object> handleBusisnessException(BusinessException ex, WebRequest request) {
@@ -79,4 +91,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     return handleExceptionInternal(ex,apiErrors,new HttpHeaders(),status,request);
   }
+
+
+
 }
