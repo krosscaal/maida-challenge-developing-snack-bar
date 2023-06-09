@@ -12,6 +12,7 @@ import javax.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,6 +45,7 @@ public class ProdutoController {
     return new ResponseEntity<>(this.produtoInterface.getProduto(id), HttpStatus.OK);
   }
 
+  @Transactional
   @PostMapping("/new")
   @ResponseBody
   public ResponseEntity<ProdutoEntity> addProduto(@Valid @RequestBody ProdutoDto dto) {
@@ -52,6 +54,7 @@ public class ProdutoController {
     return new ResponseEntity<>(obj,HttpStatus.CREATED);
   }
 
+  @Transactional
   @PutMapping("/update/{id}")
   @ResponseBody
   public ResponseEntity<ProdutoEntity> updateProduto(@PathVariable("id") Long id, @Valid @RequestBody ProdutoDto dto) {
@@ -59,6 +62,7 @@ public class ProdutoController {
     return new ResponseEntity<>(this.produtoInterface.updateProduto(id, dto), HttpStatus.OK);
   }
 
+  @Transactional
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> removeProduto(@PathVariable("id") Long id) {
     this.produtoInterface.deleteProduto(id);
