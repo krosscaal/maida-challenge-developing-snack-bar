@@ -36,14 +36,14 @@ public class GestorController {
   }
   @PostMapping("/new")
   @ResponseBody
-  public ResponseEntity<GestorEntity> addGestor(@Valid @RequestBody GestorDto dto) {
+  public ResponseEntity<GestorListDto> addGestor(@Valid @RequestBody GestorDto dto) {
 
-    final GestorEntity gestorObj = this.service.addGestor(dto);
+    final GestorListDto gestorObj = this.service.addGestor(dto);
     return new ResponseEntity<>(gestorObj, HttpStatus.CREATED);
   }
   @PutMapping("/update")
   @ResponseBody
-  public ResponseEntity<GestorEntity> updateGestor(@Valid @RequestBody GestorDto dto) {
+  public ResponseEntity<GestorListDto> updateGestor(@Valid @RequestBody GestorDto dto) {
     return new ResponseEntity<>(this.service.updateGestor(dto), HttpStatus.OK);
   }
 
