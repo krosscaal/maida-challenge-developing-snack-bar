@@ -7,7 +7,9 @@ package br.com.challenge.maidachallengedevelopingsnackbar.exceptionhandler;
 
 import br.com.challenge.maidachallengedevelopingsnackbar.exception.BusinessException;
 import br.com.challenge.maidachallengedevelopingsnackbar.exceptionhandler.ApiErrors.Campo;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingPathVariableException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
@@ -26,6 +29,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 @ControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
+  DateTimeFormatter dataFormatada = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
   @Autowired
   private MessageSource messageSource;
@@ -44,9 +48,21 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     ApiErrors apiErrors =
         new ApiErrors(
             status.value(),
-            LocalDateTime.now(),
+            LocalDateTime.now().format(dataFormatada),
             "Um o mais campos estão inválidos, favor verifique e tente novamente!",
             campos);
+
+    return handleExceptionInternal(ex, apiErrors, headers, status, request);
+  }
+
+  @Override
+  protected ResponseEntity<Object> handleMissingPathVariable(final MissingPathVariableException ex,
+      final HttpHeaders headers, final HttpStatus status, final WebRequest request) {
+    ApiErrors apiErrors =
+        new ApiErrors(
+            status.value(),
+            LocalDateTime.now().format(dataFormatada),
+            "obrigatorio na URI conter variavel id");
 
     return handleExceptionInternal(ex, apiErrors, headers, status, request);
   }
@@ -58,7 +74,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     ApiErrors apiErrors =
         new ApiErrors(
             status.value(),
-            LocalDateTime.now(),
+            LocalDateTime.now().format(dataFormatada),
             ex.getMessage());
 
     return handleExceptionInternal(ex,apiErrors,new HttpHeaders(),status,request);

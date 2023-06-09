@@ -18,17 +18,17 @@ import lombok.Setter;
 public class ApiErrors {
 
   private Integer status;
-  private LocalDateTime dataHora;
+  private String dataHora;
   private String titulo;
   private List<Campo> campos;
 
-  public ApiErrors(Integer status, LocalDateTime dataHora, String titulo) {
+  public ApiErrors(Integer status, String dataHora, String titulo) {
     this.status = status;
     this.dataHora = dataHora;
     this.titulo = titulo;
   }
 
-  public ApiErrors(final Integer status, final LocalDateTime dataHora, final String titulo,
+  public ApiErrors(final Integer status, final String dataHora, final String titulo,
       final List<Campo> campos) {
 
     this.status = status;
