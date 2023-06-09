@@ -7,7 +7,7 @@ package br.com.challenge.maidachallengedevelopingsnackbar.cliente;
 
 import br.com.challenge.maidachallengedevelopingsnackbar.cliente.dto.ClienteDto;
 import br.com.challenge.maidachallengedevelopingsnackbar.cliente.dto.ClienteDtoDadosPublicos;
-import br.com.challenge.maidachallengedevelopingsnackbar.cliente.dto.ClienteDtoVerDadosPeloGestor;
+import br.com.challenge.maidachallengedevelopingsnackbar.cliente.dto.ClienteDtoDadosParaGestor;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +52,7 @@ public class ClienteController {
 
   @GetMapping("/{id}")
   @ResponseBody
-  public ResponseEntity<ClienteDtoVerDadosPeloGestor> getClienteParaGestor(
+  public ResponseEntity<ClienteDtoDadosParaGestor> getClienteParaGestor(
       @PathVariable("id") long id) {
     return new ResponseEntity<>(this.service.getClienteParaGestor(id), HttpStatus.OK);
   }
@@ -65,9 +65,9 @@ public class ClienteController {
 
   @GetMapping("/list")
   @ResponseBody
-  public ResponseEntity<List<ClienteDtoVerDadosPeloGestor>> listClientesParaGestor() {
+  public ResponseEntity<List<ClienteDtoDadosParaGestor>> listClientesParaGestor() {
 
-    final List<ClienteDtoVerDadosPeloGestor> listaClientesParaGestor =
+    final List<ClienteDtoDadosParaGestor> listaClientesParaGestor =
         this.service.listClientesParaGestor();
     return ResponseEntity.ok().body(listaClientesParaGestor);
   }

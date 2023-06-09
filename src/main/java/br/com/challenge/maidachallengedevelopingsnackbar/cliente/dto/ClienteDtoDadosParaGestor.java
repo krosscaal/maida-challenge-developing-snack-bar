@@ -16,7 +16,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class ClienteDtoVerDadosPeloGestor {
+public class ClienteDtoDadosParaGestor {
 
   private Long id;
   private LocalDateTime createdAt;
