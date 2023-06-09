@@ -6,7 +6,7 @@ create table if not exists manager_snack_bar (
      email varchar(100) not null,
      name varchar(100) not null,
      password varchar(100) not null,
-     fone_number int4,
+     fone_number varchar(15),
      snack_bar_name varchar(255) not null,
      primary key (id)
 );

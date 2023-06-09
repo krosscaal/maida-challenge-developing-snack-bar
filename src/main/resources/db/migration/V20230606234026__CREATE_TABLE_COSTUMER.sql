@@ -6,6 +6,6 @@ create table if not exists costumer (
   email varchar(100) not null,
   name varchar(100) not null,
   password varchar(100) not null,
-  fone_number int4,
+  fone_number varchar(15),
   primary key (id)
 );
