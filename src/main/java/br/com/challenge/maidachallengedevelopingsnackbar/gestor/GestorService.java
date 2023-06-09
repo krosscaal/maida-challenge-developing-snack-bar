@@ -7,8 +7,10 @@ package br.com.challenge.maidachallengedevelopingsnackbar.gestor;
 
 import br.com.challenge.maidachallengedevelopingsnackbar.exception.BusinessException;
 import br.com.challenge.maidachallengedevelopingsnackbar.gestor.dto.GestorDto;
+import br.com.challenge.maidachallengedevelopingsnackbar.gestor.dto.GestorListDto;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,10 +26,11 @@ public class GestorService {
   @Autowired
   private ModelMapper modelMapper;
 
-  public GestorEntity getGestor(final Long id) {
+  public GestorListDto getGestor() {
 
-    final Optional<GestorEntity> optionalObjPersisted = this.findGestor(id);
-    return optionalObjPersisted.get();
+    final Optional<GestorEntity> optionalGestorEntityPersisted = this.findGestor();
+    GestorListDto gestorListDto = modelMapper.map(optionalGestorEntityPersisted.get(), GestorListDto.class);
+    return gestorListDto;
   }
 
   @Transactional
@@ -40,23 +43,32 @@ public class GestorService {
     return this.repository.save(newObj);
   }
   @Transactional
-  public GestorEntity updateGestor(final Long id, final GestorDto dto) {
+  public GestorEntity updateGestor(final GestorDto dto) {
 
-    final Optional<GestorEntity> optinalObjPersisted = this.findGestor(id);
+    final Optional<GestorEntity> optinalObjPersisted = this.findGestor();
 
     GestorEntity updateObj = modelMapper.map(dto, GestorEntity.class);
 
     updateObj.setCreatedAt(optinalObjPersisted.get().getCreatedAt());
-    updateObj.setId(id);
+    updateObj.setId(optinalObjPersisted.get().getId());
     return this.repository.save(updateObj);
   }
 
-  private Optional<GestorEntity> findGestor(final Long id) {
-    final Optional<GestorEntity> optionalObj = this.repository.findById(id);
-    if(optionalObj.isEmpty()){
+//  private Optional<GestorEntity> findGestor(final Long id) {
+//    final Optional<GestorEntity> optionalObj = this.repository.findById(id);
+//    if(optionalObj.isEmpty()){
+//      throw new BusinessException(MANAGER_NOT_FOUND);
+//    }
+//    return optionalObj;
+//  }
+
+  private Optional<GestorEntity> findGestor() {
+
+    final Optional<GestorEntity> firstOptionalGestor = this.repository.findAll().stream().findFirst();
+    if(firstOptionalGestor.isEmpty()){
       throw new BusinessException(MANAGER_NOT_FOUND);
     }
-    return optionalObj;
+    return firstOptionalGestor;
   }
 
 }

@@ -6,6 +6,7 @@
 package br.com.challenge.maidachallengedevelopingsnackbar.gestor.dto;
 
 import java.util.Date;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -20,22 +21,22 @@ public class GestorDto {
 
   @NotNull
   @NotBlank
-  @Size(min = 100)
+  @Size(min = 5, max = 100)
   public String nome;
   @NotNull
   @NotBlank
-  @Size(max = 100)
+  @Email
   public String email;
   @NotNull
   @NotBlank
   @Length(min = 6, max = 100)
   public String senha;
   @NotNull
-  @Size(max = 15)
   public Integer telefone;
   @NotNull
   public Date dataNascimento;
   @NotNull
+  @Size(min = 5, max = 100)
   private String nomeLanchonete;
 
 }
