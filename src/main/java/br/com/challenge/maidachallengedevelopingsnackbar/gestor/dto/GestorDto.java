@@ -32,7 +32,7 @@ public class GestorDto {
   @Length(min = 6, max = 100)
   public String senha;
   @NotNull
-  public Integer telefone;
+  public String telefone;
   @NotNull
   public Date dataNascimento;
   @NotNull

@@ -30,7 +30,7 @@ public abstract class User extends BaseEntity{
   private String senha;
 
   @Column(name = "fone_number")
-  private Integer telefone;
+  private String telefone;
 
   @Column(name = "birth_date")
   private Date dataNascimento;

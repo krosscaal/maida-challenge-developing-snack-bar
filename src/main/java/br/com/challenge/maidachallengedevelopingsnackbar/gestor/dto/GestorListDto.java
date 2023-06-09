@@ -25,7 +25,7 @@ public class GestorListDto {
 
   public String nome;
   public String email;
-  public Integer telefone;
+  public String  telefone;
   public Date dataNascimento;
   private String nomeLanchonete;
 
