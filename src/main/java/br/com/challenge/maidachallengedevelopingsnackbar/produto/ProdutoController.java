@@ -7,7 +7,9 @@ package br.com.challenge.maidachallengedevelopingsnackbar.produto;
 
 import br.com.challenge.maidachallengedevelopingsnackbar.produto.dto.ProdutoDto;
 import br.com.challenge.maidachallengedevelopingsnackbar.produto.dto.ProdutoDtoParaCliente;
+import br.com.challenge.maidachallengedevelopingsnackbar.produto.dto.ProdutoDtoParaGestor;
 import java.util.List;
+import java.util.Optional;
 import javax.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 @AllArgsConstructor
 @RestController
@@ -32,32 +35,31 @@ public class ProdutoController {
 
   @GetMapping("/list")
   @ResponseBody
-  public ResponseEntity<List<ProdutoEntity>> listProdutos() {
+  public ResponseEntity<List<ProdutoDtoParaGestor>> listProdutos() {
 
-    final List<ProdutoEntity> listaProdutos = this.produtoInterface.listProdutosParaGestor();
+    final List<ProdutoDtoParaGestor> listaProdutos = this.produtoInterface.listProdutosParaGestor();
     return ResponseEntity.ok().body(listaProdutos);
   }
 
   @GetMapping("/{id}")
   @ResponseBody
-  public ResponseEntity<ProdutoEntity> getProduto(@PathVariable("id") Long id) {
+  public ResponseEntity<ProdutoDtoParaGestor> getProduto(@PathVariable("id") Long id) {
 
-    return new ResponseEntity<>(this.produtoInterface.getProduto(id), HttpStatus.OK);
+    return new ResponseEntity<>(this.produtoInterface.getProduto(id).get(), HttpStatus.OK);
   }
 
   @Transactional
   @PostMapping("/new")
   @ResponseBody
-  public ResponseEntity<ProdutoEntity> addProduto(@Valid @RequestBody ProdutoDto dto) {
+  public ResponseEntity<ProdutoDtoParaGestor> addProduto(@Valid @RequestBody ProdutoDto dto) {
 
-    final ProdutoEntity obj = this.produtoInterface.addProduto(dto);
-    return new ResponseEntity<>(obj,HttpStatus.CREATED);
+    return new ResponseEntity<>(this.produtoInterface.addProduto(dto), HttpStatus.CREATED);
   }
 
   @Transactional
   @PutMapping("/update/{id}")
   @ResponseBody
-  public ResponseEntity<ProdutoEntity> updateProduto(@PathVariable("id") Long id, @Valid @RequestBody ProdutoDto dto) {
+  public ResponseEntity<ProdutoDtoParaGestor> updateProduto(@PathVariable("id") Long id, @Valid @RequestBody ProdutoDto dto) {
 
     return new ResponseEntity<>(this.produtoInterface.updateProduto(id, dto), HttpStatus.OK);
   }
@@ -74,8 +76,8 @@ public class ProdutoController {
     return ResponseEntity.ok().body(listaProdutosParaCliente);
   }
 
-  @GetMapping("/v2")
-  public ResponseEntity<ProdutoDtoParaCliente> getProdutoParaCliente(final Long id) {
+  @GetMapping("/v2/{id}")
+  public ResponseEntity<ProdutoDtoParaCliente> getProdutoParaCliente(@PathVariable("id") final Long id) {
 
     final ProdutoDtoParaCliente produtoParaClienteObj =
         this.produtoInterface.getProdutoParaCliente(id);

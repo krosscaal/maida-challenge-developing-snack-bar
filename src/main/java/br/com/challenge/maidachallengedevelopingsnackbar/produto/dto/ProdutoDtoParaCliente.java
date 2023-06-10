@@ -6,6 +6,7 @@
 package br.com.challenge.maidachallengedevelopingsnackbar.produto.dto;
 
 import br.com.challenge.maidachallengedevelopingsnackbar.domain.DomainProduct;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,7 +17,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class ProdutoDtoParaCliente {
+public class ProdutoDtoParaCliente implements Serializable {
 
   private Long id;
 

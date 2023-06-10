@@ -6,6 +6,7 @@
 package br.com.challenge.maidachallengedevelopingsnackbar.produto.dto;
 
 import br.com.challenge.maidachallengedevelopingsnackbar.domain.DomainProduct;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -20,7 +21,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class ProdutoDto {
+public class ProdutoDto implements Serializable {
 
   @NotNull
   @NotBlank

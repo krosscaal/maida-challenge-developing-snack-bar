@@ -15,6 +15,7 @@ import br.com.challenge.maidachallengedevelopingsnackbar.exception.BusinessExcep
 import br.com.challenge.maidachallengedevelopingsnackbar.gestor.dto.GestorDto;
 import br.com.challenge.maidachallengedevelopingsnackbar.produto.dto.ProdutoDto;
 import br.com.challenge.maidachallengedevelopingsnackbar.produto.dto.ProdutoDtoParaCliente;
+import br.com.challenge.maidachallengedevelopingsnackbar.produto.dto.ProdutoDtoParaGestor;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Locale;
@@ -38,34 +39,40 @@ public class ProdutoService implements ProdutoInterface{
   private ModelMapper modelMapper;
 
   @Override
-  public List<ProdutoEntity> listProdutosParaGestor() {
+  public List<ProdutoDtoParaGestor> listProdutosParaGestor() {
 
     return this.manager
         .createQuery("FROM ProdutoEntity p order by p.nome", ProdutoEntity.class)
-        .getResultList();
+        .getResultList().stream().map(produtoEntity -> modelMapper.map(produtoEntity, ProdutoDtoParaGestor.class)).collect(
+            Collectors.toList());
   }
 
   @Override
-  public ProdutoEntity getProduto(Long id) {
+  public Optional<ProdutoDtoParaGestor> getProduto(Long id) {
 
     final Optional<ProdutoEntity> optionalObjPersisted = this.findProduto(id);
-    return optionalObjPersisted.get();
+    final Optional<ProdutoDtoParaGestor> optionalprodutoDtoParaGestor =
+        optionalObjPersisted
+            .map(optionalObj -> modelMapper.map(optionalObj, ProdutoDtoParaGestor.class));
+    return optionalprodutoDtoParaGestor;
   }
 
   @Transactional
   @Override
-  public ProdutoEntity addProduto(final ProdutoDto dto) {
+  public ProdutoDtoParaGestor addProduto(final ProdutoDto dto) {
     this.validarProdutoDto(dto);
     if(this.nomeExists(dto)) {
       throw new BusinessException(PRODUCT_EXISTS);
     }
     ProdutoEntity newObj = modelMapper.map(dto, ProdutoEntity.class);
-    return this.repository.save(newObj);
+    this.repository.save(newObj);
+    ProdutoDtoParaGestor produtoDtoParaGestorObj = modelMapper.map(newObj, ProdutoDtoParaGestor.class);
+    return produtoDtoParaGestorObj;
   }
 
   @Transactional
   @Override
-  public ProdutoEntity updateProduto(final Long id, final ProdutoDto dto) {
+  public ProdutoDtoParaGestor updateProduto(final Long id, final ProdutoDto dto) {
 
     this.validarProdutoDto(dto);
     final Optional<ProdutoEntity> optionalObj = this.findProduto(id);
@@ -80,7 +87,9 @@ public class ProdutoService implements ProdutoInterface{
     ProdutoEntity updateObj = modelMapper.map(dto, ProdutoEntity.class);
     updateObj.setId(id);
     updateObj.setCreatedAt(optionalObj.get().getCreatedAt());
-    return this.repository.save(updateObj);
+    this.repository.save(updateObj);
+    ProdutoDtoParaGestor produtoDtoParaGestorObj = modelMapper.map(updateObj, ProdutoDtoParaGestor.class);
+    return produtoDtoParaGestorObj;
   }
 
   @Transactional
