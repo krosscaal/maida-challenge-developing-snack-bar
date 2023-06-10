@@ -1,6 +1,6 @@
 create table orders_products (
-                                 order_id int8 not null,
-                                 product_id int8 not null
+     order_id int8 not null,
+     product_id int8 not null
 );
 alter table orders_products
     add constraint fk_product_id
