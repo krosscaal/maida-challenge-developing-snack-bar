@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/snack_bar")
+@RequestMapping("/snack-bar")
 public class GestorController {
 
   @Autowired

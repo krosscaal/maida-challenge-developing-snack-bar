@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/products")
+@RequestMapping("/snack-bar/products")
 public class ProdutoController {
 
   private ProdutoInterface produtoInterface;
