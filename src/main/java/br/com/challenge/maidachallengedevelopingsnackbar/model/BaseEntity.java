@@ -6,7 +6,9 @@
 package br.com.challenge.maidachallengedevelopingsnackbar.model;
 
 import java.io.Serializable;
+import java.time.Clock;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
@@ -22,20 +24,18 @@ public abstract class BaseEntity implements Serializable {
 
   private static final long serialVersionID = 1L;
 
-  @Column(nullable = true, columnDefinition = "TIMESTAMP")
-  private LocalDateTime createdAt;
+  private OffsetDateTime createdAt;
 
-  @Column(nullable = true, columnDefinition = "TIMESTAMP")
-  private LocalDateTime updatedAt;
+  private OffsetDateTime updatedAt;
 
   @PrePersist
   protected void prePersist() {
-    this.createdAt = LocalDateTime.now();
+    this.createdAt = OffsetDateTime.now(Clock.systemUTC());
   }
 
   @PreUpdate
   protected void preUpdate() {
-    this.updatedAt = LocalDateTime.now();
+    this.updatedAt = OffsetDateTime.now(Clock.systemUTC());
   }
 
 }

@@ -5,13 +5,7 @@
 
 package br.com.challenge.maidachallengedevelopingsnackbar.gestor.dto;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import javax.json.bind.annotation.JsonbDateFormat;
+import java.time.OffsetDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,7 +20,7 @@ public class GestorListDto {
   public String nome;
   public String email;
   public String  telefone;
-  public Date dataNascimento;
+  public OffsetDateTime dataNascimento;
   private String nomeLanchonete;
 
 

@@ -5,8 +5,9 @@
 
 package br.com.challenge.maidachallengedevelopingsnackbar.cliente.dto;
 
-import java.time.LocalDateTime;
-import java.util.Date;
+import java.io.Serializable;
+import java.time.OffsetDateTime;
+import javax.json.bind.annotation.JsonbDateFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,14 +17,17 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class ClienteDtoDadosParaGestor {
+public class ClienteDtoDadosParaGestor implements Serializable {
 
   private Long id;
-  private LocalDateTime createdAt;
-  private LocalDateTime updatedAt;
+  private OffsetDateTime createdAt;
+
+  private OffsetDateTime updatedAt;
+
   private String nome;
   private String email;
   private String telefone;
-  private Date dataNascimento;
+
+  private OffsetDateTime dataNascimento;
 
 }

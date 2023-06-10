@@ -5,19 +5,22 @@
 
 package br.com.challenge.maidachallengedevelopingsnackbar.gestor.dto;
 
-import java.util.Date;
+import java.io.Serializable;
+import java.time.OffsetDateTime;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
-public class GestorDto {
+public class GestorDto implements Serializable {
 
   @NotNull
   @NotBlank
@@ -34,7 +37,7 @@ public class GestorDto {
   @NotNull
   public String telefone;
   @NotNull
-  public Date dataNascimento;
+  public OffsetDateTime dataNascimento;
   @NotNull
   @Size(min = 5, max = 100)
   private String nomeLanchonete;

@@ -5,7 +5,9 @@
 
 package br.com.challenge.maidachallengedevelopingsnackbar.cliente.dto;
 
-import java.util.Date;
+import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import javax.json.bind.annotation.JsonbDateFormat;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -13,13 +15,14 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
 @AllArgsConstructor
 @Getter
 @Setter
-public class ClienteDto {
+public class ClienteDto implements Serializable {
 
   @NotNull
   @NotBlank
@@ -36,7 +39,8 @@ public class ClienteDto {
   @NotNull
   public String telefone;
   @NotNull
-  public Date dataNascimento;
+  public OffsetDateTime dataNascimento;
 
+  public ClienteDto() { }
 
 }

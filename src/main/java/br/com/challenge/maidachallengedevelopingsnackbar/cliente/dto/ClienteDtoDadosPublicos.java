@@ -5,7 +5,8 @@
 
 package br.com.challenge.maidachallengedevelopingsnackbar.cliente.dto;
 
-import java.util.Date;
+import java.io.Serializable;
+import java.time.OffsetDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,11 +16,11 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class ClienteDtoDadosPublicos {
+public class ClienteDtoDadosPublicos implements Serializable {
 
   private String nome;
   private String email;
   private String  telefone;
-  private Date dataNascimento;
+  private OffsetDateTime dataNascimento;
 
 }

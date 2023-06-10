@@ -5,6 +5,7 @@
 
 package br.com.challenge.maidachallengedevelopingsnackbar.model;
 
+import java.time.OffsetDateTime;
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.Email;
@@ -33,6 +34,6 @@ public abstract class User extends BaseEntity{
   private String telefone;
 
   @Column(name = "birth_date")
-  private Date dataNascimento;
+  private OffsetDateTime dataNascimento;
 
 }
