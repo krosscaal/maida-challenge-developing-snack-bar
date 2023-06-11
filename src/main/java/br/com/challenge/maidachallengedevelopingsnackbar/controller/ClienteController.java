@@ -34,8 +34,7 @@ public class ClienteController {
   @Transactional
   @PostMapping("/new")
   @ResponseBody
-  public ResponseEntity<ClienteDtoDadosPublicos> addCliente(
-      @Valid @RequestBody ClienteDto dto) {
+  public ResponseEntity<ClienteDtoDadosPublicos> addCliente(@Valid @RequestBody ClienteDto dto) {
 
     final ClienteDtoDadosPublicos clienteDtoDadosPublicosObj =
         this.service.addCliente(dto);
@@ -45,7 +44,8 @@ public class ClienteController {
   @PutMapping("/update/{id}")
   @ResponseBody
   public ResponseEntity<ClienteDtoDadosPublicos> updateCliente(
-      @PathVariable("id") Long id, @Valid @RequestBody ClienteDto dto) {
+      @PathVariable("id") Long id,
+      @Valid @RequestBody ClienteDto dto) {
     return new ResponseEntity<>(
         this.service.updateCliente(id, dto),
         HttpStatus.OK);
@@ -53,14 +53,12 @@ public class ClienteController {
 
   @GetMapping("/{id}")
   @ResponseBody
-  public ResponseEntity<ClienteDtoDadosParaGestor> getClienteParaGestor(
-      @PathVariable("id") long id) {
+  public ResponseEntity<ClienteDtoDadosParaGestor> getClienteParaGestor(@PathVariable("id") long id) {
     return new ResponseEntity<>(this.service.getClienteParaGestor(id), HttpStatus.OK);
   }
   @GetMapping("/v2/{id}")
   @ResponseBody
-  public ResponseEntity<ClienteDtoDadosPublicos> getClienteParaCliente(
-      @PathVariable("id") Long id) {
+  public ResponseEntity<ClienteDtoDadosPublicos> getClienteParaCliente(@PathVariable("id") Long id) {
     return new ResponseEntity<>(this.service.getClienteParaCliente(id), HttpStatus.OK);
   }
 

@@ -37,7 +37,6 @@ public class ProdutoController {
   @GetMapping("/list")
   @ResponseBody
   public ResponseEntity<List<ProdutoDtoParaGestor>> listProdutos() {
-
     final List<ProdutoDtoParaGestor> listaProdutos = this.produtoInterface.listProdutosParaGestor();
     return ResponseEntity.ok().body(listaProdutos);
   }
@@ -53,7 +52,6 @@ public class ProdutoController {
   @PostMapping("/new")
   @ResponseBody
   public ResponseEntity<ProdutoDtoParaGestor> addProduto(@Valid @RequestBody ProdutoDto dto) {
-
     return new ResponseEntity<>(this.produtoInterface.addProduto(dto), HttpStatus.CREATED);
   }
 
@@ -61,7 +59,6 @@ public class ProdutoController {
   @PutMapping("/update/{id}")
   @ResponseBody
   public ResponseEntity<ProdutoDtoParaGestor> updateProduto(@PathVariable("id") Long id, @Valid @RequestBody ProdutoDto dto) {
-
     return new ResponseEntity<>(this.produtoInterface.updateProduto(id, dto), HttpStatus.OK);
   }
 
@@ -79,7 +76,6 @@ public class ProdutoController {
 
   @GetMapping("/v2/{id}")
   public ResponseEntity<ProdutoDtoParaCliente> getProdutoParaCliente(@PathVariable("id") final Long id) {
-
     final ProdutoDtoParaCliente produtoParaClienteObj =
         this.produtoInterface.getProdutoParaCliente(id);
     return ResponseEntity.ok().body(produtoParaClienteObj);
