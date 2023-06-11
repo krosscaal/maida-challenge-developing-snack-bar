@@ -19,6 +19,8 @@ public class MensageEstatica {
   public final static String COSTUMER_NOT_FOUND = "Cliente não foi encontrado!";
   public final static String COSTUMER_NAME_ERROR = "Campo nome deve conter somente letras sem carateres especiais, mínimo 4 caracteres sem contar espaços em branco!";
   public final static String ORDER_NOT_FOUND = "Pedido não encontrado!";
-  public final static String ORDER_CANNOT_MODIFY_STATUS = "Pedido encontra-se com status CANCELADO ou RECUSADO e não pode ser alterado!";
-  public final static String ORDER_IS_NOT_IN_REQUESTED_STATUS = "Pedido não encontra-se com status solicitado e não pode ser cancelado";
+  public final static String ORDER_CANNOT_MODIFY_STATUS = "Pedido encontra-se com status CANCELADO, RECUSADO ou ENTREGADO e não pode ser alterado!";
+  public final static String ORDER_IS_NOT_IN_REQUESTED_STATUS = "Pedido não encontra-se com status SOLICITADO e não pode ser cancelado";
+  public final static String ORDER_CANNOT_BE_MODIFIED = "Pedido não encontra-se com status SOLICITADO e não pode ser modifcado!";
+  public final static String ORDER_DOES_NOT_BELONG_TO_THE_CUSTOMER = "Este pedido não pertence ao cliente informado!";
 }
