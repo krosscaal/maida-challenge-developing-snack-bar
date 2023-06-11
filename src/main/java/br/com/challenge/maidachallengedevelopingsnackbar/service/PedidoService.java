@@ -5,7 +5,9 @@
 
 package br.com.challenge.maidachallengedevelopingsnackbar.service;
 
+import static br.com.challenge.maidachallengedevelopingsnackbar.mensagens.MensageEstatica.ORDER_CANNOT_BE_MODIFIED;
 import static br.com.challenge.maidachallengedevelopingsnackbar.mensagens.MensageEstatica.ORDER_CANNOT_MODIFY_STATUS;
+import static br.com.challenge.maidachallengedevelopingsnackbar.mensagens.MensageEstatica.ORDER_DOES_NOT_BELONG_TO_THE_CUSTOMER;
 import static br.com.challenge.maidachallengedevelopingsnackbar.mensagens.MensageEstatica.ORDER_IS_NOT_IN_REQUESTED_STATUS;
 import static br.com.challenge.maidachallengedevelopingsnackbar.mensagens.MensageEstatica.ORDER_NOT_FOUND;
 
@@ -16,7 +18,7 @@ import br.com.challenge.maidachallengedevelopingsnackbar.pedido.PedidoEntity;
 import br.com.challenge.maidachallengedevelopingsnackbar.pedido.dto.PedidoDtoStatus;
 import br.com.challenge.maidachallengedevelopingsnackbar.produto.dto.ProdutoDtoParaCliente;
 import br.com.challenge.maidachallengedevelopingsnackbar.repository.PedidoRepository;
-import br.com.challenge.maidachallengedevelopingsnackbar.pedido.dto.PedidoDtoSolicitar;
+import br.com.challenge.maidachallengedevelopingsnackbar.pedido.dto.PedidoDto;
 import br.com.challenge.maidachallengedevelopingsnackbar.produto.ProdutoEntity;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -41,10 +43,10 @@ public class PedidoService {
   @Autowired
   private EntityManager entityManager;
 
-  public PedidoDtoStatus addPedido(final PedidoDtoSolicitar dto) {
+  public PedidoDtoStatus addPedido(final PedidoDto dto) {
 
-    final PedidoEntity pedidoEntity = this.validarPedidoDto(dto);
-    final PedidoEntity savedPedidoEntity = this.repository.save(pedidoEntity);
+    final PedidoEntity novoPedidoEntity = this.validarPedidoDto(dto);
+    final PedidoEntity savedPedidoEntity = this.repository.save(novoPedidoEntity);
 
     final List<ProdutoDtoParaCliente> listProdutoDtoParaClientes =
         this.produtoService.listProdutosEmPedido(savedPedidoEntity.getProdutos());
@@ -57,8 +59,38 @@ public class PedidoService {
             savedPedidoEntity.getStatus());
     return pedidoDtoStatus;
   }
+  public PedidoDtoStatus updatePedido(final Long pedido_id, final PedidoDto dto) {
 
-  public PedidoDtoStatus getStatusPedido(final Long id) {
+    final PedidoEntity pedidoEntityParaUpdate = this.validarPedidoDto(dto);
+    final Optional<PedidoEntity> optionalPedidoEntityPersisted = this.findPedido(pedido_id);
+
+    if (!optionalPedidoEntityPersisted.get().getStatus().equals(DomainOrderStatus.REQUESTED)) {
+      throw new BusinessException(ORDER_CANNOT_BE_MODIFIED);
+    }
+    if (!optionalPedidoEntityPersisted.get().getCliente().equals(pedidoEntityParaUpdate.getCliente())) {
+      throw new BusinessException(ORDER_DOES_NOT_BELONG_TO_THE_CUSTOMER);
+    }
+
+    pedidoEntityParaUpdate.setId(optionalPedidoEntityPersisted.get().getId());
+    pedidoEntityParaUpdate.setDataPedido(optionalPedidoEntityPersisted.get().getDataPedido());
+    pedidoEntityParaUpdate.setCreatedAt(optionalPedidoEntityPersisted.get().getCreatedAt());
+    pedidoEntityParaUpdate.setStatus(optionalPedidoEntityPersisted.get().getStatus());
+    this.repository.save(pedidoEntityParaUpdate);
+
+    final List<ProdutoDtoParaCliente> listProdutoDtoParaClientes =
+        this.produtoService.listProdutosEmPedido(pedidoEntityParaUpdate.getProdutos());
+
+    PedidoDtoStatus pedidoDtoStatus =
+        new PedidoDtoStatus(
+            pedidoEntityParaUpdate.getId(),
+            listProdutoDtoParaClientes,
+            pedidoEntityParaUpdate.getValor(),
+            pedidoEntityParaUpdate.getStatus());
+
+    return pedidoDtoStatus;
+  }
+
+  public PedidoDtoStatus getPedido(final Long id) {
     final PedidoEntity pedidoEntityPersisted = this.findPedido(id).get();
     final List<ProdutoDtoParaCliente> listProdutoDtoParaClientes =
         this.produtoService.listProdutosEmPedido(pedidoEntityPersisted.getProdutos());
@@ -101,7 +133,8 @@ public class PedidoService {
     final Optional<PedidoEntity> optionalPedidoEntityPersisted = this.findPedido(id);
 
     if (optionalPedidoEntityPersisted.get().getStatus().equals(DomainOrderStatus.CANCELED)
-        || optionalPedidoEntityPersisted.get().getStatus().equals(DomainOrderStatus.RECUSED)) {
+        || optionalPedidoEntityPersisted.get().getStatus().equals(DomainOrderStatus.RECUSED)
+        || optionalPedidoEntityPersisted.get().getStatus().equals(DomainOrderStatus.DELIVERED)) {
       throw new BusinessException(ORDER_CANNOT_MODIFY_STATUS);
     }
     final PedidoDtoStatus pedidoDtoStatus =
@@ -121,7 +154,7 @@ public class PedidoService {
 
   }
 
-  private PedidoEntity validarPedidoDto(PedidoDtoSolicitar dto) {
+  private PedidoEntity validarPedidoDto(PedidoDto dto) {
 
     ClienteEntity clienteEntityPersisted =
         this.clienteService.findCliente(dto.getCliente_id()).get();
@@ -140,9 +173,9 @@ public class PedidoService {
       valorTotalDouble += produto.getPreco().doubleValue();
     }
     final BigDecimal valorTotal = new BigDecimal(valorTotalDouble);
+
     PedidoEntity pedidoEntity =
         new PedidoEntity(
-            dto.getCliente_id(),
             clienteEntityPersisted,
             listaDeProdutos,
             dto.getDataPedido(),

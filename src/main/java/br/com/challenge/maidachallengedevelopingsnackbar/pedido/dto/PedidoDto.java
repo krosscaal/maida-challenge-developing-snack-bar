@@ -5,7 +5,6 @@
 
 package br.com.challenge.maidachallengedevelopingsnackbar.pedido.dto;
 
-import br.com.challenge.maidachallengedevelopingsnackbar.domain.DomainOrderStatus;
 import java.io.Serializable;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
@@ -20,7 +19,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Setter
 @Getter
-public class PedidoDtoSolicitar implements Serializable {
+public class PedidoDto implements Serializable {
 
   @NotNull
   private Long cliente_id;

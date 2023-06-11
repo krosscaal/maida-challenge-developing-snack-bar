@@ -31,12 +31,14 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Builder
 @Getter
 @Setter
@@ -44,6 +46,7 @@ import lombok.Setter;
 @Table(name = "snack_bar_orders")
 public class PedidoEntity extends BaseEntity {
 
+  @EqualsAndHashCode.Include
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -74,4 +77,19 @@ public class PedidoEntity extends BaseEntity {
   @NotNull
   @Enumerated(EnumType.STRING)
   private DomainOrderStatus status;
+
+  public PedidoEntity(
+      final ClienteEntity cliente,
+      final List<ProdutoEntity> produtos,
+      final OffsetDateTime dataPedido,
+      final BigDecimal valor,
+      final DomainOrderStatus status) {
+
+    this.cliente = cliente;
+    this.produtos = produtos;
+    this.dataPedido = dataPedido;
+    this.valor = valor;
+    this.status = status;
+  }
+
 }
