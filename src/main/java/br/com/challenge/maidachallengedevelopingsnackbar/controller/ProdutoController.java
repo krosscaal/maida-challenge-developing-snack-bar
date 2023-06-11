@@ -3,8 +3,9 @@
  *
  */
  
-package br.com.challenge.maidachallengedevelopingsnackbar.produto;
+package br.com.challenge.maidachallengedevelopingsnackbar.controller;
 
+import br.com.challenge.maidachallengedevelopingsnackbar.produto.ProdutoInterface;
 import br.com.challenge.maidachallengedevelopingsnackbar.produto.dto.ProdutoDto;
 import br.com.challenge.maidachallengedevelopingsnackbar.produto.dto.ProdutoDtoParaCliente;
 import br.com.challenge.maidachallengedevelopingsnackbar.produto.dto.ProdutoDtoParaGestor;

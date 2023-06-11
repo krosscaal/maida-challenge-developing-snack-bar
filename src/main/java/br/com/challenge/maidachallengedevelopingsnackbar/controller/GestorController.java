@@ -3,18 +3,16 @@
  *
  */
 
-package br.com.challenge.maidachallengedevelopingsnackbar.gestor;
+package br.com.challenge.maidachallengedevelopingsnackbar.controller;
 
 import br.com.challenge.maidachallengedevelopingsnackbar.gestor.dto.GestorDto;
 import br.com.challenge.maidachallengedevelopingsnackbar.gestor.dto.GestorListDto;
-import javax.json.bind.annotation.JsonbDateFormat;
+import br.com.challenge.maidachallengedevelopingsnackbar.service.GestorService;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;

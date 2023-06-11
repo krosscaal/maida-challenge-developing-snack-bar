@@ -3,21 +3,20 @@
  *
  */
 
-package br.com.challenge.maidachallengedevelopingsnackbar.gestor;
+package br.com.challenge.maidachallengedevelopingsnackbar.service;
 
 import static br.com.challenge.maidachallengedevelopingsnackbar.mensagens.MensageEstatica.MANAGER_EXISTS;
 import static br.com.challenge.maidachallengedevelopingsnackbar.mensagens.MensageEstatica.MANAGER_NAME_ERROR;
 import static br.com.challenge.maidachallengedevelopingsnackbar.mensagens.MensageEstatica.MANAGER_NOT_FOUND;
-import static br.com.challenge.maidachallengedevelopingsnackbar.mensagens.MensageEstatica.MANAGER_TELEFONE_ERROR;
+import static br.com.challenge.maidachallengedevelopingsnackbar.mensagens.MensageEstatica.TELEFONE_ERROR;
 
-import br.com.challenge.maidachallengedevelopingsnackbar.cliente.dto.ClienteDto;
 import br.com.challenge.maidachallengedevelopingsnackbar.exception.BusinessException;
+import br.com.challenge.maidachallengedevelopingsnackbar.gestor.GestorEntity;
+import br.com.challenge.maidachallengedevelopingsnackbar.repository.GestorRepository;
 import br.com.challenge.maidachallengedevelopingsnackbar.gestor.dto.GestorDto;
 import br.com.challenge.maidachallengedevelopingsnackbar.gestor.dto.GestorListDto;
-import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -94,7 +93,7 @@ public class GestorService {
       throw new BusinessException(MANAGER_NAME_ERROR);
     }
     if(!telefoneIsNumeros){
-      throw new BusinessException(MANAGER_TELEFONE_ERROR);
+      throw new BusinessException(TELEFONE_ERROR);
     }
   }
 

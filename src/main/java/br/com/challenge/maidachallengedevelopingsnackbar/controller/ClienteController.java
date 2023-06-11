@@ -3,11 +3,12 @@
  *
  */
 
-package br.com.challenge.maidachallengedevelopingsnackbar.cliente;
+package br.com.challenge.maidachallengedevelopingsnackbar.controller;
 
 import br.com.challenge.maidachallengedevelopingsnackbar.cliente.dto.ClienteDto;
 import br.com.challenge.maidachallengedevelopingsnackbar.cliente.dto.ClienteDtoDadosPublicos;
 import br.com.challenge.maidachallengedevelopingsnackbar.cliente.dto.ClienteDtoDadosParaGestor;
+import br.com.challenge.maidachallengedevelopingsnackbar.service.ClienteService;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

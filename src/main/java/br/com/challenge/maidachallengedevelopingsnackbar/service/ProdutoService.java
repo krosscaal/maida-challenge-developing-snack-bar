@@ -3,7 +3,7 @@
  *
  */
 
-package br.com.challenge.maidachallengedevelopingsnackbar.produto;
+package br.com.challenge.maidachallengedevelopingsnackbar.service;
 
 import static br.com.challenge.maidachallengedevelopingsnackbar.mensagens.MensageEstatica.PRODUCT_EXISTS;
 import static br.com.challenge.maidachallengedevelopingsnackbar.mensagens.MensageEstatica.PRODUCT_NAME_ERROR;
@@ -12,11 +12,12 @@ import static br.com.challenge.maidachallengedevelopingsnackbar.mensagens.Mensag
 import static br.com.challenge.maidachallengedevelopingsnackbar.mensagens.MensageEstatica.PRODUCT_QUANTITY_ERROR;
 
 import br.com.challenge.maidachallengedevelopingsnackbar.exception.BusinessException;
-import br.com.challenge.maidachallengedevelopingsnackbar.gestor.dto.GestorDto;
+import br.com.challenge.maidachallengedevelopingsnackbar.produto.ProdutoEntity;
+import br.com.challenge.maidachallengedevelopingsnackbar.produto.ProdutoInterface;
+import br.com.challenge.maidachallengedevelopingsnackbar.repository.ProdutoRepository;
 import br.com.challenge.maidachallengedevelopingsnackbar.produto.dto.ProdutoDto;
 import br.com.challenge.maidachallengedevelopingsnackbar.produto.dto.ProdutoDtoParaCliente;
 import br.com.challenge.maidachallengedevelopingsnackbar.produto.dto.ProdutoDtoParaGestor;
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -30,7 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @AllArgsConstructor
 @Service
-public class ProdutoService implements ProdutoInterface{
+public class ProdutoService implements ProdutoInterface {
 
   private ProdutoRepository repository;
 
@@ -117,8 +118,14 @@ public class ProdutoService implements ProdutoInterface{
         modelMapper.map(produtoObjPersisted.get(), ProdutoDtoParaCliente.class);
     return produtoDtoParaCliente;
   }
+  protected List<ProdutoDtoParaCliente> listProdutosEmPedido(List<ProdutoEntity> lista) {
+    return lista
+        .stream()
+        .map(produtoEntity -> modelMapper.map(produtoEntity, ProdutoDtoParaCliente.class))
+        .collect(Collectors.toList());
+  }
 
-  private Optional<ProdutoEntity> findProduto(final Long id) {
+  protected Optional<ProdutoEntity> findProduto(final Long id) {
     final Optional<ProdutoEntity> optionalObj = this.repository.findById(id);
     if(optionalObj.isEmpty()) {
       throw new BusinessException(PRODUCT_NOT_FOUND);

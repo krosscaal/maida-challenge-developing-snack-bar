@@ -3,13 +3,15 @@
  *
  */
 
-package br.com.challenge.maidachallengedevelopingsnackbar.cliente;
+package br.com.challenge.maidachallengedevelopingsnackbar.service;
 
 import static br.com.challenge.maidachallengedevelopingsnackbar.mensagens.MensageEstatica.COSTUMER_EMAIL_EXISTS;
 import static br.com.challenge.maidachallengedevelopingsnackbar.mensagens.MensageEstatica.COSTUMER_NAME_ERROR;
 import static br.com.challenge.maidachallengedevelopingsnackbar.mensagens.MensageEstatica.COSTUMER_NOT_FOUND;
-import static br.com.challenge.maidachallengedevelopingsnackbar.mensagens.MensageEstatica.COSTUMER_TELEFONE_ERROR;
+import static br.com.challenge.maidachallengedevelopingsnackbar.mensagens.MensageEstatica.TELEFONE_ERROR;
 
+import br.com.challenge.maidachallengedevelopingsnackbar.cliente.ClienteEntity;
+import br.com.challenge.maidachallengedevelopingsnackbar.repository.ClienteRepository;
 import br.com.challenge.maidachallengedevelopingsnackbar.cliente.dto.ClienteDto;
 import br.com.challenge.maidachallengedevelopingsnackbar.cliente.dto.ClienteDtoDadosPublicos;
 import br.com.challenge.maidachallengedevelopingsnackbar.cliente.dto.ClienteDtoDadosParaGestor;
@@ -86,7 +88,7 @@ public class ClienteService {
         .collect(Collectors.toList());
   }
 
-  private Optional<ClienteEntity> findCliente(final Long id) {
+  protected Optional<ClienteEntity> findCliente(final Long id) {
     final Optional optionalObj = this.repository.findById(id);
     if(optionalObj.isEmpty()) {
       throw new BusinessException(COSTUMER_NOT_FOUND);
@@ -119,7 +121,7 @@ public class ClienteService {
       throw new BusinessException(COSTUMER_NAME_ERROR);
     }
     if(!telefoneIsNumeros){
-      throw new BusinessException(COSTUMER_TELEFONE_ERROR);
+      throw new BusinessException(TELEFONE_ERROR);
     }
   }
 }
