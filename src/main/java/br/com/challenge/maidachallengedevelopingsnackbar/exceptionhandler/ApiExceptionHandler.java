@@ -7,6 +7,7 @@ package br.com.challenge.maidachallengedevelopingsnackbar.exceptionhandler;
 
 import static br.com.challenge.maidachallengedevelopingsnackbar.mensagens.MensageEstatica.COSTUMER_NOT_FOUND;
 import static br.com.challenge.maidachallengedevelopingsnackbar.mensagens.MensageEstatica.MANAGER_NOT_FOUND;
+import static br.com.challenge.maidachallengedevelopingsnackbar.mensagens.MensageEstatica.ORDER_NOT_FOUND;
 import static br.com.challenge.maidachallengedevelopingsnackbar.mensagens.MensageEstatica.PRODUCT_NOT_FOUND;
 
 import br.com.challenge.maidachallengedevelopingsnackbar.exception.BusinessException;
@@ -77,7 +78,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         new ApiErrors(
             status.value(),
             LocalDateTime.now().format(dataFormatada),
-            "Formato de data errada, deve estar em formato yyyy-mm-dd");
+            "Formato de data errada, deve estar em formato yyyy-MM-ddTHH:mm:ss.SSSZ");
 
     return handleExceptionInternal(ex, apiErrors, headers, status, request);
 
@@ -88,7 +89,8 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     HttpStatus status = HttpStatus.BAD_REQUEST;
     if(ex.getMessage().equals(PRODUCT_NOT_FOUND)
         || ex.getMessage().equals(MANAGER_NOT_FOUND)
-        || ex.getMessage().equals(COSTUMER_NOT_FOUND)) {
+        || ex.getMessage().equals(COSTUMER_NOT_FOUND)
+        || ex.getMessage().equals(ORDER_NOT_FOUND)) {
       status = HttpStatus.NOT_FOUND;
     }
 
