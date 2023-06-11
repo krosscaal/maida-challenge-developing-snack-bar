@@ -10,7 +10,7 @@ import br.com.challenge.maidachallengedevelopingsnackbar.domain.DomainOrderStatu
 import br.com.challenge.maidachallengedevelopingsnackbar.model.BaseEntity;
 import br.com.challenge.maidachallengedevelopingsnackbar.produto.ProdutoEntity;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -65,7 +65,7 @@ public class PedidoEntity extends BaseEntity {
 
   @NotNull
   @Column(name = "order_date")
-  private LocalDateTime dataPedido;
+  private OffsetDateTime dataPedido;
 
   @NotNull
   @Column(name = "total_price")

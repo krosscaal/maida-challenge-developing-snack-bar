@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -37,13 +38,16 @@ public class ProdutoDto implements Serializable {
   private DomainProduct tipo;
 
   @NotNull
+  @Positive
   private Integer quantidade;
 
   @NotNull
   @Min(3)
+  @Positive
   private Integer quantidadeMinima;
 
   @NotNull
+  @Positive
   private BigDecimal preco;
 
 }
