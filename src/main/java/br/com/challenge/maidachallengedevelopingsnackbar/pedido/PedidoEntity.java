@@ -57,7 +57,7 @@ public class PedidoEntity extends BaseEntity {
       foreignKey = @ForeignKey(name = "fk_order_costumer_id"))
   private ClienteEntity cliente;
 
-  @OneToMany(mappedBy = "pedido", cascade = CascadeType.MERGE)
+  @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
   private List<ItemPedidoEntity> itens = new ArrayList<>();
   @NotNull
   @Column(name = "order_date")

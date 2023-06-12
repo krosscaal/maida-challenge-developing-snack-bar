@@ -5,9 +5,7 @@
 
 package br.com.challenge.maidachallengedevelopingsnackbar.service;
 
-import static br.com.challenge.maidachallengedevelopingsnackbar.mensagens.MensageEstatica.ORDER_CANNOT_BE_MODIFIED;
 import static br.com.challenge.maidachallengedevelopingsnackbar.mensagens.MensageEstatica.ORDER_CANNOT_MODIFY_STATUS;
-import static br.com.challenge.maidachallengedevelopingsnackbar.mensagens.MensageEstatica.ORDER_DOES_NOT_BELONG_TO_THE_CUSTOMER;
 import static br.com.challenge.maidachallengedevelopingsnackbar.mensagens.MensageEstatica.ORDER_IS_NOT_IN_REQUESTED_STATUS;
 import static br.com.challenge.maidachallengedevelopingsnackbar.mensagens.MensageEstatica.ORDER_NOT_FOUND;
 import static br.com.challenge.maidachallengedevelopingsnackbar.mensagens.MensageEstatica.QUANTITY_ERROR;
@@ -18,17 +16,14 @@ import br.com.challenge.maidachallengedevelopingsnackbar.exception.BusinessExcep
 import br.com.challenge.maidachallengedevelopingsnackbar.itempedido.ItemPedidoEntity;
 import br.com.challenge.maidachallengedevelopingsnackbar.pedido.PedidoEntity;
 import br.com.challenge.maidachallengedevelopingsnackbar.itempedido.dto.ItemPedidoDto;
-import br.com.challenge.maidachallengedevelopingsnackbar.pedido.dto.PedidoDtoProdutoQuantidade;
 import br.com.challenge.maidachallengedevelopingsnackbar.pedido.dto.PedidoDtoStatus;
 import br.com.challenge.maidachallengedevelopingsnackbar.pedido.dto.PedidoDtoStatusUpdate;
 import br.com.challenge.maidachallengedevelopingsnackbar.repository.PedidoRepository;
 import br.com.challenge.maidachallengedevelopingsnackbar.pedido.dto.PedidoDto;
 import br.com.challenge.maidachallengedevelopingsnackbar.produto.ProdutoEntity;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,7 +74,7 @@ public class PedidoService {
             pedidoEntityPersisted.getStatus());
     return pedidoDtoStatus;
   }
-  public List<PedidoDtoStatus> ListPedidoFinalizadosPorCliente(final Long cliente_id) {
+  public List<PedidoDtoStatus> listPedidoFinalizadosPorCliente(final Long cliente_id) {
     this.gestorService.findGestor();
     this.clienteService.findCliente(cliente_id);
     final List<PedidoEntity> listPedidoStatusFinalizados =
