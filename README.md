@@ -22,6 +22,12 @@ retire sudo se não estiver rodando em alguma distro linux
 
 Assim será instalado o container do postgreSQL v14
 
-Logo e rodar o projeto que o FlyWay irá rodar as migrations instalando as tabelasnecesarias no banco
+Logo e rodar o projeto que o FlyWay irá rodar as migrations instalando as tabelas necesarias no banco
 
- 
+Faço notar que no pacote config especificamente da classe SwaggerConfig
+estão comentadas as anotações de configuração devido ao um bug que encontrei ao realiaar uma listagem
+de um endpoint listPedidosFinalizadosCliente, nos outros endpoint o swagger funciona bem.
+
+Você pode testar usando o Postman ou Insomnia que é meu caso que todos os endpoint funcionam normalmente inclusive o citado.
+
+
