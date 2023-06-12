@@ -66,7 +66,7 @@ public class GestorService {
     return gestorListDto;
   }
 
-  private Optional<GestorEntity> findGestor() {
+  protected Optional<GestorEntity> findGestor() {
 
     final Optional<GestorEntity> firstOptionalGestor = this.repository.findAll().stream().findFirst();
     if(firstOptionalGestor.isEmpty()){
@@ -96,5 +96,6 @@ public class GestorService {
       throw new BusinessException(TELEFONE_ERROR);
     }
   }
+
 
 }

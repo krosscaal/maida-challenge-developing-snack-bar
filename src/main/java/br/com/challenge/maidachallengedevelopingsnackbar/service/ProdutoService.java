@@ -12,6 +12,8 @@ import static br.com.challenge.maidachallengedevelopingsnackbar.mensagens.Mensag
 import static br.com.challenge.maidachallengedevelopingsnackbar.mensagens.MensageEstatica.PRODUCT_QUANTITY_ERROR;
 
 import br.com.challenge.maidachallengedevelopingsnackbar.exception.BusinessException;
+import br.com.challenge.maidachallengedevelopingsnackbar.itempedido.ItemPedidoEntity;
+import br.com.challenge.maidachallengedevelopingsnackbar.itempedido.dto.ItemPedidoDto;
 import br.com.challenge.maidachallengedevelopingsnackbar.produto.ProdutoEntity;
 import br.com.challenge.maidachallengedevelopingsnackbar.produto.ProdutoInterface;
 import br.com.challenge.maidachallengedevelopingsnackbar.repository.ProdutoRepository;
@@ -38,10 +40,11 @@ public class ProdutoService implements ProdutoInterface {
   private EntityManager manager;
 
   private ModelMapper modelMapper;
+  private GestorService gestorService;
 
   @Override
   public List<ProdutoDtoParaGestor> listProdutosParaGestor() {
-
+    this.gestorService.findGestor();
     return this.manager
         .createQuery("FROM ProdutoEntity p order by p.nome", ProdutoEntity.class)
         .getResultList().stream().map(produtoEntity -> modelMapper.map(produtoEntity, ProdutoDtoParaGestor.class)).collect(
@@ -50,7 +53,7 @@ public class ProdutoService implements ProdutoInterface {
 
   @Override
   public Optional<ProdutoDtoParaGestor> getProduto(Long id) {
-
+    this.gestorService.findGestor();
     final Optional<ProdutoEntity> optionalObjPersisted = this.findProduto(id);
     final Optional<ProdutoDtoParaGestor> optionalprodutoDtoParaGestor =
         optionalObjPersisted
@@ -61,6 +64,7 @@ public class ProdutoService implements ProdutoInterface {
   @Transactional
   @Override
   public ProdutoDtoParaGestor addProduto(final ProdutoDto dto) {
+    this.gestorService.findGestor();
     this.validarProdutoDto(dto);
     if(this.nomeExists(dto)) {
       throw new BusinessException(PRODUCT_EXISTS);
@@ -74,7 +78,7 @@ public class ProdutoService implements ProdutoInterface {
   @Transactional
   @Override
   public ProdutoDtoParaGestor updateProduto(final Long id, final ProdutoDto dto) {
-
+    this.gestorService.findGestor();
     this.validarProdutoDto(dto);
     final Optional<ProdutoEntity> optionalObj = this.findProduto(id);
     final Optional<ProdutoEntity> optionalByNome =
@@ -96,13 +100,14 @@ public class ProdutoService implements ProdutoInterface {
   @Transactional
   @Override
   public void deleteProduto(final Long id) {
+    this.gestorService.findGestor();
     this.findProduto(id);
     this.repository.deleteById(id);
   }
 
   @Override
   public List<ProdutoDtoParaCliente> listProdutosParaCliente() {
-
+    this.gestorService.findGestor();
     return repository
         .findAll(Sort.by("nome"))
         .stream()
@@ -112,16 +117,16 @@ public class ProdutoService implements ProdutoInterface {
 
   @Override
   public ProdutoDtoParaCliente getProdutoParaCliente(final Long id) {
-
+    this.gestorService.findGestor();
     final Optional<ProdutoEntity> produtoObjPersisted = this.findProduto(id);
     ProdutoDtoParaCliente produtoDtoParaCliente =
         modelMapper.map(produtoObjPersisted.get(), ProdutoDtoParaCliente.class);
     return produtoDtoParaCliente;
   }
-  protected List<ProdutoDtoParaCliente> listProdutosEmPedido(List<ProdutoEntity> lista) {
+  protected List<ItemPedidoDto> listProdutosEmPedido(List<ItemPedidoEntity> lista) {
     return lista
         .stream()
-        .map(produtoEntity -> modelMapper.map(produtoEntity, ProdutoDtoParaCliente.class))
+        .map(itemPedidoEntity -> modelMapper.map(itemPedidoEntity, ItemPedidoDto.class))
         .collect(Collectors.toList());
   }
 

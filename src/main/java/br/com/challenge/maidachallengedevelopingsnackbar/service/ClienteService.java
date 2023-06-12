@@ -8,6 +8,7 @@ package br.com.challenge.maidachallengedevelopingsnackbar.service;
 import static br.com.challenge.maidachallengedevelopingsnackbar.mensagens.MensageEstatica.COSTUMER_EMAIL_EXISTS;
 import static br.com.challenge.maidachallengedevelopingsnackbar.mensagens.MensageEstatica.COSTUMER_NAME_ERROR;
 import static br.com.challenge.maidachallengedevelopingsnackbar.mensagens.MensageEstatica.COSTUMER_NOT_FOUND;
+import static br.com.challenge.maidachallengedevelopingsnackbar.mensagens.MensageEstatica.MANAGER_NOT_FOUND;
 import static br.com.challenge.maidachallengedevelopingsnackbar.mensagens.MensageEstatica.TELEFONE_ERROR;
 
 import br.com.challenge.maidachallengedevelopingsnackbar.cliente.ClienteEntity;
@@ -33,9 +34,12 @@ public class ClienteService {
 
   @Autowired
   private ModelMapper modelMapper;
+  @Autowired
+  private GestorService gestorService;
 
   @Transactional
   public ClienteDtoDadosPublicos addCliente(final ClienteDto dto) {
+    this.gestorService.findGestor();
     this.validarClienteDto(dto);
     if(this.emailExists(dto)) {
       throw new BusinessException(COSTUMER_EMAIL_EXISTS);
@@ -49,7 +53,7 @@ public class ClienteService {
 
   @Transactional
   public ClienteDtoDadosPublicos updateCliente(final Long id, final ClienteDto dto) {
-
+    this.gestorService.findGestor();
     this.validarClienteDto(dto);
     final Optional<ClienteEntity> optionalObjPersisted = this.findCliente(id);
     if(!dto.getEmail().equals(optionalObjPersisted.get().getEmail())){
@@ -69,6 +73,7 @@ public class ClienteService {
   }
 
   public ClienteDtoDadosParaGestor getClienteParaGestor(final Long id) {
+    this.gestorService.findGestor();
     final Optional<ClienteEntity> clienteObjPersisted = this.findCliente(id);
     ClienteDtoDadosParaGestor clienteDtoVerDadosPeloGestor =
         modelMapper.map(clienteObjPersisted.get(), ClienteDtoDadosParaGestor.class);
@@ -76,6 +81,7 @@ public class ClienteService {
   }
 
   public ClienteDtoDadosPublicos getClienteParaCliente(final Long id) {
+    this.gestorService.findGestor();
     final Optional<ClienteEntity> clienteObjPersisted = this.findCliente(id);
     ClienteDtoDadosPublicos clienteDtoDadosPublicos =
         modelMapper.map(clienteObjPersisted.get(), ClienteDtoDadosPublicos.class);
@@ -83,6 +89,7 @@ public class ClienteService {
   }
 
   public List<ClienteDtoDadosParaGestor> listClientesParaGestor() {
+    this.gestorService.findGestor();
     return this.repository.findAll(Sort.by("nome"))
         .stream().map(cliente -> modelMapper.map(cliente, ClienteDtoDadosParaGestor.class))
         .collect(Collectors.toList());
