@@ -6,6 +6,5 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=snackbar
     ports:
       - '5452:5432'
