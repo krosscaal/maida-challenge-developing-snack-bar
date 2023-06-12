@@ -29,5 +29,4 @@ public class ProdutoDtoParaCliente implements Serializable {
 
   private BigDecimal preco;
 
-
 }

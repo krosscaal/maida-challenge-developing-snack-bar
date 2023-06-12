@@ -7,6 +7,7 @@ package br.com.challenge.maidachallengedevelopingsnackbar.controller;
 
 import br.com.challenge.maidachallengedevelopingsnackbar.domain.DomainOrderStatus;
 import br.com.challenge.maidachallengedevelopingsnackbar.pedido.dto.PedidoDtoStatus;
+import br.com.challenge.maidachallengedevelopingsnackbar.pedido.dto.PedidoDtoStatusUpdate;
 import br.com.challenge.maidachallengedevelopingsnackbar.service.ClienteService;
 import br.com.challenge.maidachallengedevelopingsnackbar.pedido.dto.PedidoDto;
 import br.com.challenge.maidachallengedevelopingsnackbar.service.ProdutoService;
@@ -38,23 +39,17 @@ public class PedidoController {
 
     return new ResponseEntity<>(this.service.addPedido(dto), HttpStatus.CREATED);
   }
-
-  @Transactional
-  @PutMapping("/update/{id}")
-  public ResponseEntity<PedidoDtoStatus> updatePedido(@PathVariable("id") Long id, @Valid @RequestBody PedidoDto dto) {
-    return new ResponseEntity<>(this.service.updatePedido(id, dto), HttpStatus.OK);
-  }
   @GetMapping("/status/{id}")
   public ResponseEntity<PedidoDtoStatus> getPedidoStatus(@PathVariable("id") Long id) {
     return new ResponseEntity<>(this.service.getPedido(id), HttpStatus.OK);
   }
-  @GetMapping("/finished-orders/{id}")
-  public ResponseEntity<List<PedidoDtoStatus>> listPedidosFinalizadosCliente(@PathVariable("id") Long id) {
+  @GetMapping("/finished-orders/{cliente_id}")
+  public ResponseEntity<List<PedidoDtoStatus>> listPedidosFinalizadosCliente(@PathVariable("cliente_id") Long id) {
     return new ResponseEntity<>(this.service.ListPedidoFinalizadosPorCliente(id), HttpStatus.OK);
   }
   @Transactional
   @PutMapping("/update-status/{id}")
-  public ResponseEntity<PedidoDtoStatus> updateStatusDoPedido(@PathVariable("id") Long id, DomainOrderStatus status) {
+  public ResponseEntity<PedidoDtoStatus> updateStatusDoPedido(@PathVariable("id") Long id, @Valid @RequestBody PedidoDtoStatusUpdate status) {
     return new ResponseEntity<>(this.service.updateStatusPedido(id, status), HttpStatus.OK);
   }
   @Transactional

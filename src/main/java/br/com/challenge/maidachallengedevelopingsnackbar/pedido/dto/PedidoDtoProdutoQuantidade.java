@@ -5,11 +5,9 @@
 
 package br.com.challenge.maidachallengedevelopingsnackbar.pedido.dto;
 
-import java.io.Serializable;
-import java.time.OffsetDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,13 +17,11 @@ import lombok.Setter;
 @NoArgsConstructor
 @Setter
 @Getter
-public class PedidoDto implements Serializable {
-
+public class PedidoDtoProdutoQuantidade {
   @NotNull
-  private Long cliente_id;
+  private Long produto_id;
   @NotNull
-  private List<PedidoDtoProdutoQuantidade> produtos = new ArrayList<>();
-  @NotNull
-  private OffsetDateTime dataPedido;
+  @Min(1)
+  private Integer quantidade;
 
 }
