@@ -8,6 +8,7 @@ package br.com.challenge.maidachallengedevelopingsnackbar.controller;
 import br.com.challenge.maidachallengedevelopingsnackbar.gestor.dto.GestorDto;
 import br.com.challenge.maidachallengedevelopingsnackbar.gestor.dto.GestorListDto;
 import br.com.challenge.maidachallengedevelopingsnackbar.service.GestorService;
+import io.swagger.annotations.ApiOperation;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,11 +28,13 @@ public class GestorController {
   @Autowired
   private GestorService service;
 
+  @ApiOperation(value = "BUSCA GESTOR")
   @GetMapping("/manager")
   @ResponseBody
   public ResponseEntity<GestorListDto> getGestor() {
     return new ResponseEntity<>(this.service.getGestor(), HttpStatus.OK );
   }
+  @ApiOperation(value = "ADICIONAR GESTOR")
   @PostMapping("/new")
   @ResponseBody
   public ResponseEntity<GestorListDto> addGestor(@Valid @RequestBody GestorDto dto) {
@@ -39,6 +42,7 @@ public class GestorController {
     final GestorListDto gestorObj = this.service.addGestor(dto);
     return new ResponseEntity<>(gestorObj, HttpStatus.CREATED);
   }
+  @ApiOperation(value = "ATUALIZAR GESTOR")
   @PutMapping("/update")
   @ResponseBody
   public ResponseEntity<GestorListDto> updateGestor(@Valid @RequestBody GestorDto dto) {

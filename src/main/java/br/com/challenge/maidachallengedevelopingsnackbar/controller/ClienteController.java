@@ -9,12 +9,14 @@ import br.com.challenge.maidachallengedevelopingsnackbar.cliente.dto.ClienteDto;
 import br.com.challenge.maidachallengedevelopingsnackbar.cliente.dto.ClienteDtoDadosPublicos;
 import br.com.challenge.maidachallengedevelopingsnackbar.cliente.dto.ClienteDtoDadosParaGestor;
 import br.com.challenge.maidachallengedevelopingsnackbar.service.ClienteService;
+import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,6 +33,7 @@ public class ClienteController {
   @Autowired
   private ClienteService service;
 
+  @ApiOperation(value = "CRIAR NOVO CLIENTE")
   @Transactional
   @PostMapping("/new")
   @ResponseBody
@@ -40,6 +43,7 @@ public class ClienteController {
         this.service.addCliente(dto);
     return new ResponseEntity<>(clienteDtoDadosPublicosObj, HttpStatus.CREATED);
   }
+  @ApiOperation(value = "ATUALIZAR CLIENTE")
   @Transactional
   @PutMapping("/update/{id}")
   @ResponseBody
@@ -51,17 +55,20 @@ public class ClienteController {
         HttpStatus.OK);
   }
 
+  @ApiOperation(value = "BUSCAR CLIENTE PELO ID PARA GESTOR")
   @GetMapping("/{id}")
   @ResponseBody
   public ResponseEntity<ClienteDtoDadosParaGestor> getClienteParaGestor(@PathVariable("id") long id) {
     return new ResponseEntity<>(this.service.getClienteParaGestor(id), HttpStatus.OK);
   }
+  @ApiOperation(value = "BUSCAR CLIENTE PELO ID PARA CLIENTE")
   @GetMapping("/v2/{id}")
   @ResponseBody
   public ResponseEntity<ClienteDtoDadosPublicos> getClienteParaCliente(@PathVariable("id") Long id) {
     return new ResponseEntity<>(this.service.getClienteParaCliente(id), HttpStatus.OK);
   }
 
+  @ApiOperation(value = "LISTA DE CLIENTES PARA GESTOR")
   @GetMapping("/list")
   @ResponseBody
   public ResponseEntity<List<ClienteDtoDadosParaGestor>> listClientesParaGestor() {

@@ -9,6 +9,7 @@ import br.com.challenge.maidachallengedevelopingsnackbar.produto.ProdutoInterfac
 import br.com.challenge.maidachallengedevelopingsnackbar.produto.dto.ProdutoDto;
 import br.com.challenge.maidachallengedevelopingsnackbar.produto.dto.ProdutoDtoParaCliente;
 import br.com.challenge.maidachallengedevelopingsnackbar.produto.dto.ProdutoDtoParaGestor;
+import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import java.util.Optional;
 import javax.validation.Valid;
@@ -34,6 +35,7 @@ public class ProdutoController {
 
   private ProdutoInterface produtoInterface;
 
+  @ApiOperation(value = "LISTAR PRODUTOS")
   @GetMapping("/list")
   @ResponseBody
   public ResponseEntity<List<ProdutoDtoParaGestor>> listProdutos() {
@@ -41,6 +43,7 @@ public class ProdutoController {
     return ResponseEntity.ok().body(listaProdutos);
   }
 
+  @ApiOperation(value = "BUSCAR PRODUTO")
   @GetMapping("/{id}")
   @ResponseBody
   public ResponseEntity<ProdutoDtoParaGestor> getProduto(@PathVariable("id") Long id) {
@@ -48,6 +51,7 @@ public class ProdutoController {
     return new ResponseEntity<>(this.produtoInterface.getProduto(id).get(), HttpStatus.OK);
   }
 
+  @ApiOperation(value = "ADICIONAR PRODUTO")
   @Transactional
   @PostMapping("/new")
   @ResponseBody
@@ -55,6 +59,7 @@ public class ProdutoController {
     return new ResponseEntity<>(this.produtoInterface.addProduto(dto), HttpStatus.CREATED);
   }
 
+  @ApiOperation(value = "ATUALIZAR PRODUTO")
   @Transactional
   @PutMapping("/update/{id}")
   @ResponseBody
@@ -62,18 +67,21 @@ public class ProdutoController {
     return new ResponseEntity<>(this.produtoInterface.updateProduto(id, dto), HttpStatus.OK);
   }
 
+  @ApiOperation(value = "REMOVER PRODUTO")
   @Transactional
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> removeProduto(@PathVariable("id") Long id) {
     this.produtoInterface.deleteProduto(id);
     return ResponseEntity.noContent().build();
   }
+  @ApiOperation(value = "LISTA PRODUTOS(PARA CLIENTE)")
   @GetMapping("/list-v2")
   public ResponseEntity<List<ProdutoDtoParaCliente>> listProdutosParaCliente() {
     final List<ProdutoDtoParaCliente> listaProdutosParaCliente = this.produtoInterface.listProdutosParaCliente();
     return ResponseEntity.ok().body(listaProdutosParaCliente);
   }
 
+  @ApiOperation(value = "BUSCAR PRODUTO(PARA CLIENTE)")
   @GetMapping("/v2/{id}")
   public ResponseEntity<ProdutoDtoParaCliente> getProdutoParaCliente(@PathVariable("id") final Long id) {
     final ProdutoDtoParaCliente produtoParaClienteObj =
