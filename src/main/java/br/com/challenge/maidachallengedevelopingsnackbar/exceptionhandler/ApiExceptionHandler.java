@@ -87,10 +87,13 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
   @ExceptionHandler(BusinessException.class)
   public ResponseEntity<Object> handleBusisnessException(BusinessException ex, WebRequest request) {
     HttpStatus status = HttpStatus.BAD_REQUEST;
-    if(ex.getMessage().equals(PRODUCT_NOT_FOUND)
+    if (ex.getMessage().equals(PRODUCT_NOT_FOUND)
         || ex.getMessage().equals(MANAGER_NOT_FOUND)
         || ex.getMessage().equals(COSTUMER_NOT_FOUND)
         || ex.getMessage().equals(ORDER_NOT_FOUND)) {
+      status = HttpStatus.NOT_FOUND;
+    }
+    if (ex.getMessage().equals(MANAGER_NOT_FOUND)) {
       status = HttpStatus.NOT_FOUND;
     }
 
