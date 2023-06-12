@@ -8,7 +8,7 @@ create table if not exists snack_bar_orders (
    costumer_id int8,
    primary key (id)
 );
-alter table snack_bar_orders
+alter table if exists snack_bar_orders
     add constraint fk_order_costumer_id
         foreign key (costumer_id)
             references costumer
