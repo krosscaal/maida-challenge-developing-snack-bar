@@ -1,0 +1,11 @@
+version: '1.0'
+services:
+  postgres-14:
+    image: postgres:14-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=snackbar
+    ports:
+      - '5452:5432'
