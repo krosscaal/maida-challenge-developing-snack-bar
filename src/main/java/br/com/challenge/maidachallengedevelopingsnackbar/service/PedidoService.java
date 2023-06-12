@@ -84,13 +84,12 @@ public class PedidoService {
     this.clienteService.findCliente(cliente_id);
     final List<PedidoEntity> listPedidoStatusFinalizados =
         this.entityManager
-        .createQuery("FROM PedidoEntity p WHERE "
-            + "p.status =:statusDelivered "
-            + "or p.status =:statusCanceled "
-            + "or p.status =:statusRecused")
+        .createQuery("FROM PedidoEntity p WHERE p.cliente.id =:cliente_id  "
+            + "and (p.status =:statusDelivered or p.status =:statusCanceled or p.status =:statusRecused)")
             .setParameter("statusDelivered", DomainOrderStatus.DELIVERED)
             .setParameter("statusCanceled", DomainOrderStatus.CANCELED)
             .setParameter("statusRecused", DomainOrderStatus.RECUSED)
+            .setParameter("cliente_id", cliente_id)
             .getResultList();
 
     List<PedidoDtoStatus> listaPedidoDtoStatus = new ArrayList<>();
