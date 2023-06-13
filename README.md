@@ -29,9 +29,8 @@ Assim será instalado o container do postgreSQL v14
 Logo e rodar o projeto que o FlyWay irá rodar as migrations instalando as tabelas necesarias no banco
 
 Faço notar que no pacote config especificamente da classe SwaggerConfig
-estão comentadas as anotações de configuração devido ao um bug que encontrei ao realiaar uma listagem
-de um endpoint listPedidosFinalizadosCliente, nos outros endpoint o swagger funciona bem.
+estão comentadas as anotações de configuração devido ao um bug que encontrei ao realiaar uma listagem.
 
-Você pode testar usando o Postman ou Insomnia que é meu caso que todos os endpoint funcionam normalmente inclusive o citado.
+Você pode testar usando o Postman ou Insomnia que é meu caso assim todos os endpoint funcionam normalmente.
 
-No projeto existe um arquivo em formato PDF MaidaDesafio.pdf onde tem informação sobre os endpoints.
+No projeto existe um arquivo em formato PDF MaidaDesafio.pdf onde tem mais informação sobre os endpoints.
