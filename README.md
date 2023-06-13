@@ -33,4 +33,4 @@ de um endpoint listPedidosFinalizadosCliente, nos outros endpoint o swagger func
 
 Você pode testar usando o Postman ou Insomnia que é meu caso que todos os endpoint funcionam normalmente inclusive o citado.
 
-
+No projeto existe um arquivo em formato PDF MaidaDesafio.pdf onde tem informação sobre os endpoints.
