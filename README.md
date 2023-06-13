@@ -5,14 +5,17 @@
 ## Maven
 ## Banco de dados PostgreSQL
 ## Swagger 2.9.2
+## Docker
 
 # Para levantar o projeto
 
 Deve ter o Java instalado na maquina, assim como maven
 
-Clone o projeto do repositorio Git
+Clone o projeto do repositorio Git https://github.com/krosscaal/maida-challenge-developing-snack-bar
 
-Na sua maquina usando o terminal entre na pasta do projeto criada pelo repositorio dever parecida com /maida-challenge-developing-snack-bar
+Na sua maquina usando o terminal entre na pasta do projeto criada pelo repositorio dever ser 
+
+parecida com /maida-challenge-developing-snack-bar
 
 execute o comando do docker
 
