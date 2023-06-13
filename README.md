@@ -3,6 +3,7 @@
 # Projeto desenvolvido em Spring Boot
 ## Java 17 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" width="40" height="40"/>
 ## Maven
+## IDE Intellij IDEA
 ## Banco de dados PostgreSQL
 ## Swagger 2.9.2
 ## Docker
