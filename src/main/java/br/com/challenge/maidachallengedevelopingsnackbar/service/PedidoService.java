@@ -110,8 +110,10 @@ public class PedidoService {
         || optionalPedidoEntityPersisted.get().getStatus().equals(DomainOrderStatus.DELIVERED)) {
       throw new BusinessException(ORDER_CANNOT_MODIFY_STATUS);
     }
+    final List<ItemPedidoDto> listItemPedidoDto =
+        this.produtoService.listProdutosEmPedido(optionalPedidoEntityPersisted.get().getItens());
     final PedidoDtoStatus pedidoDtoStatus =
-        this.updateStatus(optionalPedidoEntityPersisted.get(), status.getStatus());
+        this.updateStatus(optionalPedidoEntityPersisted.get() ,status.getStatus());
     return pedidoDtoStatus;
   }
 
@@ -159,8 +161,15 @@ public class PedidoService {
 
   private PedidoDtoStatus updateStatus(PedidoEntity entity, DomainOrderStatus status) {
     entity.setStatus(status);
-    this.repository.save(entity);
-    PedidoDtoStatus pedidoDtoStatus = modelMapper.map(entity, PedidoDtoStatus.class);
+    final PedidoEntity pedidoEntitySaved = this.repository.save(entity);
+    final List<ItemPedidoDto> itemPedidoDtoList = this.produtoService.listProdutosEmPedido(
+        pedidoEntitySaved.getItens());
+    PedidoDtoStatus pedidoDtoStatus =
+        new PedidoDtoStatus(
+            pedidoEntitySaved.getId(),
+            itemPedidoDtoList,
+            pedidoEntitySaved.getValor(),
+            pedidoEntitySaved.getStatus());
     return pedidoDtoStatus;
   }
 }
