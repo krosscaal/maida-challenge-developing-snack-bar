@@ -37,7 +37,6 @@ public class ProdutoController {
 
   @ApiOperation(value = "LISTAR PRODUTOS")
   @GetMapping("/list")
-  @ResponseBody
   public ResponseEntity<List<ProdutoDtoParaGestor>> listProdutos() {
     final List<ProdutoDtoParaGestor> listaProdutos = this.produtoInterface.listProdutosParaGestor();
     return ResponseEntity.ok().body(listaProdutos);
@@ -45,7 +44,6 @@ public class ProdutoController {
 
   @ApiOperation(value = "BUSCAR PRODUTO")
   @GetMapping("/{id}")
-  @ResponseBody
   public ResponseEntity<ProdutoDtoParaGestor> getProduto(@PathVariable("id") Long id) {
 
     return new ResponseEntity<>(this.produtoInterface.getProduto(id).get(), HttpStatus.OK);
@@ -54,7 +52,6 @@ public class ProdutoController {
   @ApiOperation(value = "ADICIONAR PRODUTO")
   @Transactional
   @PostMapping("/new")
-  @ResponseBody
   public ResponseEntity<ProdutoDtoParaGestor> addProduto(@Valid @RequestBody ProdutoDto dto) {
     return new ResponseEntity<>(this.produtoInterface.addProduto(dto), HttpStatus.CREATED);
   }
@@ -62,7 +59,6 @@ public class ProdutoController {
   @ApiOperation(value = "ATUALIZAR PRODUTO")
   @Transactional
   @PutMapping("/update/{id}")
-  @ResponseBody
   public ResponseEntity<ProdutoDtoParaGestor> updateProduto(@PathVariable("id") Long id, @Valid @RequestBody ProdutoDto dto) {
     return new ResponseEntity<>(this.produtoInterface.updateProduto(id, dto), HttpStatus.OK);
   }

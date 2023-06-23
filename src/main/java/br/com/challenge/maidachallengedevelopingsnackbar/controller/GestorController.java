@@ -30,13 +30,11 @@ public class GestorController {
 
   @ApiOperation(value = "BUSCA GESTOR")
   @GetMapping("/manager")
-  @ResponseBody
   public ResponseEntity<GestorListDto> getGestor() {
     return new ResponseEntity<>(this.service.getGestor(), HttpStatus.OK );
   }
   @ApiOperation(value = "ADICIONAR GESTOR")
   @PostMapping("/new")
-  @ResponseBody
   public ResponseEntity<GestorListDto> addGestor(@Valid @RequestBody GestorDto dto) {
 
     final GestorListDto gestorObj = this.service.addGestor(dto);
@@ -44,7 +42,6 @@ public class GestorController {
   }
   @ApiOperation(value = "ATUALIZAR GESTOR")
   @PutMapping("/update")
-  @ResponseBody
   public ResponseEntity<GestorListDto> updateGestor(@Valid @RequestBody GestorDto dto) {
     return new ResponseEntity<>(this.service.updateGestor(dto), HttpStatus.OK);
   }
