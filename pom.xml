@@ -10,7 +10,7 @@
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
   <groupId>br.com.challenge</groupId>
-  <artifactId>maida-challenge-developing-snack-bar</artifactId>
+  <artifactId>developing-snack-bar</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>maida-challenge-developing-snack-bar</name>
   <description>maida-challenge-developing-snack-bar</description>

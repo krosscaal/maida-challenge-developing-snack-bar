@@ -133,7 +133,7 @@ public class ProdutoService implements ProdutoInterface {
   protected Optional<ProdutoEntity> findProduto(final Long id) {
     final Optional<ProdutoEntity> optionalObj = this.repository.findById(id);
     if(optionalObj.isEmpty()) {
-      throw new BusinessException(PRODUCT_NOT_FOUND);
+      throw new BusinessException(String.format("Erro com produto_id %d ,", id)+PRODUCT_NOT_FOUND);
     }
     return optionalObj;
   }
